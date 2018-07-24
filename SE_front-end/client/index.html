@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/fontello.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="./dist/main.js" defer></script>
+</head>
+
+<body>
+
+    <!-- <div id="input-container">
+
+    </div> -->
+
+    <div class="header-wrap">
+        <header class="header">
+            <div class="logo">
+                <a href="#" class="logo__link">Logo</a>
+            </div>
+        </header>
+    </div>
+    <section class="section section-form">
+        <div class="container">
+            <form id="input-container" class="ingred-form">
+                <!-- <div class="field-wrap field-wrap_res">
+                    <span type="text" class="result-field">Aqua</span>
+                    <button type="button" class="confirm-button delete-button">
+                        <i class="icon-cancel"></i>
+                    </button>
+                </div> -->
+                <div class="field-wrap">
+                    <input type="text" class="input-field" placeholder="Введите название ингредиента">
+                    <button type="button" class="confirm-button add-button">
+                        <i class="icon-plus"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <div class="upload-files">
+        <div class="file-upload image">
+            <label for="file">
+                <input class="file-img" type="file" accept=".jpg, .jpeg, .png">
+                <i class="icon-picture"></i>
+            </label>
+        </div>
+        <div class="file-upload camera">
+            <label for="file">
+                <input class="file-camera" type="file" id="file" accept="image/*" capture="camera" style="visibility:hidden;" />
+                <i class="icon-camera"></i>
+            </label>
+        </div>
+    </div>
+</body>
+
+</html>
