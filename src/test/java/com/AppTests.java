@@ -33,7 +33,6 @@ public class AppTests {
     @Test
     public void simple() throws Exception {
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("hello"));
+                .andExpect(status().isOk());
     }
 }
