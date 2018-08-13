@@ -1,5 +1,7 @@
 package com.skinexpert.controller;
 
+import com.skinexpert.util.Property;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,8 @@ import java.io.IOException;
 public class TestController extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("/result.html");
+        req.setCharacterEncoding("utf8");
+        req.getSession().setAttribute("message", "its ok");
+        resp.sendRedirect(Property.HOST + "/admin/add-component.html");
     }
 }
