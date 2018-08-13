@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление ингридиента в базу</title>
+</head>
+<body ng-app="cm">
+<div ng-controller="action-message">
+    {{message}}
+</div>
+
+<form action="/skin-expert/add-component" method="post">
+    Название: <input type="text" name="name"><br>
+    Описание: <input type="text" name="description"><br>
+    Тип(D,N,G): <input type="text" name="type"><br>
+
+    <input type="submit" value="Добавить">
+</form>
+<form>
+<button formaction="/">На главную</button></form>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="../js/component-manager.js"></script>
+</body>
+</html>
