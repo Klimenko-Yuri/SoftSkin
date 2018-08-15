@@ -69,7 +69,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="edit-component.html">
+                    <a href="change-component.html">
                         <i class="ti-pencil"></i>
                         <p>Редактировать компонент</p>
                     </a>
@@ -146,8 +146,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="name">Название:</label>
-                                            <input type="text" id="name" ng-required="true" class="form-control border-input" placeholder="Краткое название компонента">
+                                            <label>Название:</label>
+                                            <input type="text" name="name" ng-required="true" class="form-control border-input" placeholder="Краткое название компонента">
                                         </div>
                                     </div>
                                 </div>
@@ -155,17 +155,16 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="description">Описание:</label>
-                                            <input type="text" id="description" ng-required="true" class="form-control border-input" placeholder="Описание компонента">
+                                            <label>Описание:</label>
+                                            <input type="text" name="description" ng-required="true" class="form-control border-input" placeholder="Описание компонента">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="type">Тип</label>
-                                                <select id="type" class="form-control" ng-required="true">
-                                                    <option value="">...</option>
+                                            <label>Тип</label>
+                                                <select name="type" class="form-control" ng-required="true">
                                                     <option value="D">D</option>
                                                     <option value="N">N</option>
                                                     <option value="G">G</option>
