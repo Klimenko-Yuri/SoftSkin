@@ -85,14 +85,11 @@
                     <!-- scan + send -->
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-                        <form>
-                            <div class="input-group mb-3">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input">
-                                    <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Выберите файл</label>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-success">Отправить</button>
+                        <form method="post" enctype="multipart/form-data" action="">
+                            <label for="loadImg" >Выбрать файл</label>
+                            <input type='file' id="loadImg"/>
+                            <img id="img" src="#" alt="your image"/>
+                            <input type="submit" id="send">
                         </form>
                     </div>
                     <!-- /scan + send-->
@@ -109,9 +106,7 @@
         <!-- /go home -->
     </div>
     <script src="js/jquery.min.js"></script>
-    <!--
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
     <script src="js/scripts.js"></script>
-     -->
 </body>
 </html>
