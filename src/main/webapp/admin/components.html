@@ -56,13 +56,13 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-				<li>
+				<li class="active">
                     <a href="components.html">
                         <i class="ti-view-list-alt"></i>
                         <p>Компоненты</p>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="add-component.html">
                         <i class="ti-plus"></i>
                         <p>Добавить компонент</p>
@@ -132,56 +132,36 @@
 
         <div class="content">
             <div class="container-fluid">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Добавить компонент</h4>
-                        </div>
-                        <div class="content">
-                            <div ng-controller="action-message">
-                                {{message}}
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card ">
+                            <div class="header">
+                                <h4 class="title">Компоненты</h4>
+                                <p class="category">Перечень компонентов</p>
                             </div>
-                            <form action="/skin-expert/add-component" method="post">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="name">Название:</label>
-                                            <input type="text" id="name" ng-required="true" class="form-control border-input" placeholder="Краткое название компонента">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div ng-controller="get-all" class="content table-responsive table-full-width">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="c in components">
+                                            <td>{{c.id}}</td>
+                                            <td>{{c.name}}</td>
+                                            <td>{{c.description}}</td>
+                                            <td>{{c.type}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="description">Описание:</label>
-                                            <input type="text" id="description" ng-required="true" class="form-control border-input" placeholder="Описание компонента">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="type">Тип</label>
-                                                <select id="type" class="form-control" ng-required="true">
-                                                    <option value="">...</option>
-                                                    <option value="D">D</option>
-                                                    <option value="N">N</option>
-                                                    <option value="G">G</option>
-                                                </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Добавить</button>
-                                </div>
-                                <div class="clearfix"></div>
-                            </form>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
 
             </div>
@@ -231,17 +211,24 @@
     <!--  Notifications Plugin    -->
     <script src="js/bootstrap-notify.js"></script>
 
+    <!--  Google Maps Plugin    -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 
     <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 	<script src="js/paper-dashboard.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="js/component-manager.js"></script>
+	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+    <!-- <script src="js/demo.js"></script> -->
 
-    <script type="text/javascript">
-        $(document).ready(function(){
+<script type="text/javascript">
+    $(document).ready(function(){
 
-        });
-    </script>
+
+
+    });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="js/component-manager.js"></script>
 
 </html>

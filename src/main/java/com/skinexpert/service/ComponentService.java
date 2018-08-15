@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 
 /**
  * Created by Mihail Kolomiets on 09.08.18.
@@ -43,6 +44,18 @@ public class ComponentService {
         manager.getTransaction().commit();
 
         return component;
+    }
+
+    public List<Component> getAll() {
+
+        List<Component> componentList;
+
+        manager.getTransaction().begin();
+        componentList = manager.createQuery("SELECT c from Component c").getResultList();
+        manager.getTransaction().commit();
+
+        return componentList;
+
     }
 
 
