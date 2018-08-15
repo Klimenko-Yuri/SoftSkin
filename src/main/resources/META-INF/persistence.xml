@@ -13,7 +13,7 @@
             <property name="hibernate.connection.url"
                       value="jdbc:mysql://localhost:3306/SkinExp"/>
             <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="jW3nYY00"/>
+            <property name="hibernate.connection.password" value="jW****00"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.connection.charSet" value="UTF-8"/>
