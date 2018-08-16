@@ -141,7 +141,10 @@
                                 <h4 class="title">Компоненты</h4>
                                 <p class="category">Перечень компонентов</p>
                             </div>
-                            <div ng-controller="get-all" class="content table-responsive table-full-width">
+                            <div ng-controller="get-all" ng-model="msg" class="content table-responsive table-full-width">
+
+                                {{msg}}
+
                                 <table class="table table-hover">
                                     <thead>
                                         <th>ID</th>
@@ -152,7 +155,7 @@
                                     <tbody>
                                         <tr ng-repeat="c in components">
                                             <td>{{c.id}}</td>
-                                            <td>{{c.name}}</td>
+                                            <td ng-click="del(c.id)">{{c.name}}</td>
                                             <td>{{c.description}}</td>
                                             <td>{{c.type}}</td>
                                         </tr>
