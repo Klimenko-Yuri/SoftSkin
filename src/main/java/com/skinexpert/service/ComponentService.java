@@ -55,7 +55,18 @@ public class ComponentService {
         manager.getTransaction().commit();
 
         return componentList;
+    }
 
+    public Component deleteById(long id) {
+
+        Component component;
+
+        manager.getTransaction().begin();
+        component = manager.find(Component.class, id);
+        manager.remove(component);
+        manager.getTransaction().commit();
+
+        return component;
     }
 
 
