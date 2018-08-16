@@ -29,16 +29,3 @@ app.controller('finder', function ($scope, $http) {
 
     }
 });
-
-app.controller('get-all', function ($scope, $http) {
-    $http.get(host + "/get-all-component")
-        .then(function (response) {
-            $scope.components = response.data;
-        });
-    $scope.del = function(id) {
-        $http.delete(host + "/delete-component/" + id)
-            .then(function (response) {
-                $scope.msg = response.data;
-            });
-    }
-});
