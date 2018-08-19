@@ -1,0 +1,14 @@
+<%= _.template(require('./../includes/header.html'))(data) %>
+
+<!--<form method="post" enctype="multipart/form-data" action="">-->
+  <label for="loadImg" >Выбрать файл</label>
+  <input type='file' id="loadImg"/>
+  <label for="camera">Камера</label>
+  <input type="file" id="camera" accept="image/*" capture="camera">
+  <div>
+      <img src="" alt="" id="img">
+  </div>
+  <input type="submit" id="send">
+<!--</form>-->
+
+<%= _.template(require('./../includes/footer.html'))(data) %>
