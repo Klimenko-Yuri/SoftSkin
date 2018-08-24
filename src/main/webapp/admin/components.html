@@ -142,15 +142,16 @@
                                 <p class="category">Перечень компонентов</p>
                             </div>
                             <div ng-controller="get-all" ng-model="msg" class="content table-responsive table-full-width">
-
-                                {{msg}}
-
+								<div class="alert alert-warning">
+									<span>{{msg}}</span>
+								</div>
                                 <table class="table table-hover">
                                     <thead>
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Type</th>
+										<th>&nbsp;</th>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="c in components">
@@ -158,6 +159,10 @@
                                             <td ng-click="del(c.id)">{{c.name}}</td>
                                             <td>{{c.description}}</td>
                                             <td>{{c.type}}</td>
+											<td>
+												<button class="btn btn-primary btn-sm"><i class="ti-pencil"></i></button>
+												<button class="btn btn-primary btn-sm"><i class="ti-trash"></i></button>
+											</td>
                                         </tr>
                                     </tbody>
                                 </table>
