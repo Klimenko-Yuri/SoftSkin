@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/find-component/*")
 public class FindComponent extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json; charset = utf8");
         req.setCharacterEncoding("utf8");

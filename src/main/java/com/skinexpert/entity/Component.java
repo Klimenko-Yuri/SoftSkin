@@ -21,6 +21,9 @@ public class Component {
     @Column
     private TypeComponent type;
 
+    @Column(nullable = false)
+    private boolean visiable;
+
     public TypeComponent getType() {
         return type;
     }
@@ -51,5 +54,13 @@ public class Component {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isVisiable() {
+        return visiable;
+    }
+
+    public void setVisiable(boolean visiable) {
+        this.visiable = visiable;
     }
 }

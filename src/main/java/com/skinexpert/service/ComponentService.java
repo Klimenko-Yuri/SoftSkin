@@ -26,6 +26,16 @@ public class ComponentService {
         return component;
     }
 
+    public Component get(long id) {
+        Component component;
+
+        manager.getTransaction().begin();
+        component = manager.find(Component.class, id);
+        manager.getTransaction().commit();
+
+        return component;
+    }
+
     public Component findByName(String name) {
         Component component;
 

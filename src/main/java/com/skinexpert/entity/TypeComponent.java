@@ -19,6 +19,9 @@ public enum TypeComponent {
     }
 
     public TypeComponent getTypeByAtribute(String type) {
+        if (type == null) {
+            return MIDDLE;
+        }
         type = type.toUpperCase();
         for(TypeComponent typeComponent : TypeComponent.values()) {
             if(typeComponent.getAtribute().equals(type))

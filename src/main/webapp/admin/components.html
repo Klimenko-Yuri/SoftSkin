@@ -151,17 +151,19 @@
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Type</th>
+                                        <th>Show</th>
 										<th>&nbsp;</th>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="c in components">
                                             <td>{{c.id}}</td>
-                                            <td ng-click="del(c.id)">{{c.name}}</td>
+                                            <td>{{c.name}}</td>
                                             <td>{{c.description}}</td>
                                             <td>{{c.type}}</td>
+                                            <td>{{c.visiable}}</td>
 											<td>
-												<button class="btn btn-primary btn-sm"><i class="ti-pencil"></i></button>
-												<button class="btn btn-primary btn-sm"><i class="ti-trash"></i></button>
+												<button ng-click="del(c.name)" class="btn btn-primary btn-sm"><i class="ti-pencil"></i></button>
+												<button ng-click="del(c.id)" class="btn btn-primary btn-sm"><i class="ti-trash"></i></button>
 											</td>
                                         </tr>
                                     </tbody>
