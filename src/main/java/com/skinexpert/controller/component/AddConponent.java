@@ -49,7 +49,7 @@ public class AddConponent extends HttpServlet {
         String id = params.get("id");
 
         Component component = new Component();
-        if (id != null) {
+        if (!id.equals("undefined")) {
             component.setId(Long.valueOf(id));
             addResult = "Компонент изменен";
         }

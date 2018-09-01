@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.skinexpert</groupId>
-    <artifactId>SoftSkin</artifactId>
-    <version>0.1.0</version>
+    <artifactId>skin-expert</artifactId>
+    <version>3.2</version>
     <packaging>war</packaging>
 
     <properties>
