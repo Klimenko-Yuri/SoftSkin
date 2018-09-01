@@ -1,5 +1,6 @@
 package com.skinexpert.controller.component;
 
+import com.google.gson.Gson;
 import com.skinexpert.entity.Component;
 import com.skinexpert.entity.TypeComponent;
 import com.skinexpert.service.ComponentService;
@@ -10,7 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Mihail Kolomiets on 09.08.18.
@@ -23,22 +28,38 @@ public class AddConponent extends HttpServlet {
 
         ComponentService componentService = new ComponentService();
 
+        resp.setContentType("application/json; charset = utf8");
         req.setCharacterEncoding("utf8");
         //todo validation
         String addResult = null;
-        String name = req.getParameter("name");
-        String description = req.getParameter("description");
-        String type = req.getParameter("type");
-        String id = req.getParameter("id");
+
+        Map<String, String> params = new HashMap<>();
+
+        String[] body = req.getReader().lines().collect(Collectors.joining()).split("\"");
+
+        for (int i = 1; i < body.length; i += 4) {
+            if (body.length > i + 2)
+            params.put(body[i], body[i + 2]);
+            System.out.println(body[i] + " -> " + body[i+2]);
+        }
+
+        String name = params.get("name");
+        String description = params.get("description");
+        String type = params.get("type");
+        String id = params.get("id");
 
         Component component = new Component();
-        if(id != null) {
+        if (!id.equals("undefined")) {
             component.setId(Long.valueOf(id));
             addResult = "Компонент изменен";
         }
+
+        System.out.println("name -> " + name + "\ndescription -> " + description);
+
         component.setName(name);
         component.setDescription(description);
         component.setType(TypeComponent.DANGER.getTypeByAtribute(type));
+        component.setVisiable(true);
 
         try {
             if (component.getId() == 0 && componentService.findByName(name) != null) {
@@ -51,11 +72,12 @@ public class AddConponent extends HttpServlet {
         }
         if (component.getId() != 0 && addResult == null) {
             addResult = "Компонент " + component.getName() + " добавлен в базу";
-        } else if (component.getId() == 0){
+        } else if (component.getId() == 0) {
             addResult = "Не удалось добавить компонент т.к: " + addResult;
         }
 
-        req.getSession().setAttribute("message", addResult);
-        resp.sendRedirect(Property.HOST + "/admin/add-component.html");
+        String outMessage = new Gson().toJson(addResult);
+        resp.getWriter().write(outMessage);
+
     }
 }
