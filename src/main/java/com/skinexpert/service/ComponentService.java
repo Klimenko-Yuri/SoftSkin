@@ -6,9 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -16,6 +14,7 @@ import java.util.List;
  */
 public class ComponentService {
 
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory("SoftSkin");
     private EntityManager manager = factory.createEntityManager();
 
