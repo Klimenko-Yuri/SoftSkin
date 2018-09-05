@@ -6,115 +6,117 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Загрузить из галереи</title>
 
-    <link rel="icon" href="images/favicons/favicon.ico" type="image/x-icon" />
-    <link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" href="images/favicons/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png" sizes="16x16"/>
     <link href='images/favicons/favicon-96x96.png' rel='shortcut icon' type='image/x-icon'/>
     <link href='images/favicons/favicon-96x96.png' rel='icon' type='image/x-icon'/>
 
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/favicons/apple-icon-57x57.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/favicons/apple-icon-72x72.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/favicons/apple-icon-114x114.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/favicons/apple-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/favicons/apple-icon-57x57.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/favicons/apple-icon-72x72.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/favicons/apple-icon-114x114.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/favicons/apple-icon-144x144.png"/>
 
     <!-- FONTS -->
-	<link href='https://fonts.googleapis.com/css?family=Bilbo+Swash+Caps' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Bilbo+Swash+Caps' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/all.min.css" rel="stylesheet" type="text/css">
-	<link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body ng-app="cm" ng-controller="clicker">
-    <div class="page" id="top">
-        <!-- preloader-->
-        <!-- /preloader-->
-        <!-- sticky menu -->
-		<header class='sticky-header js-stick top-fixed'>
-			<div class="container">
-				<nav class="main-nav">
-					<div class="full-wrapper align-center">
-						<!-- logo sticky -->
-						<div class="nav-logo-wrap-sticky">
-							<a href="index.html" class="logo">
-								<img src="images/logo.png" data-at2x="images/logo@2x.png" alt>
-							</a>
-						</div>
-						<!-- / logo sticky -->
-						<!-- menu mobile bars -->
-						<div class="mobile-nav">
-							<i class="fa fa-bars"></i>
-						</div>
-						<!-- / menu mobile bars -->
-						<div class="inner-nav desktop-nav">
-							<ul class="clearlist">
-								<!-- logo menu -->
-								<li class="nav-logo-wrap">
-									<a href="index.html" class="logo">
-										<img src="images/logo.png" data-at2x="images/logo@2x.png" alt>
-									</a>
-								</li>
-								<!-- / logo menu -->
-							</ul>
-						</div>
-					</div>
-				</nav>
-			</div>
-		</header>
-        <!-- page section -->
-        <section class="page-section alt-color">
-            <div class="container align-center">
+<div class="page" id="top">
+    <!-- preloader-->
+    <!-- /preloader-->
+    <!-- sticky menu -->
+    <header class='sticky-header js-stick top-fixed'>
+        <div class="container">
+            <nav class="main-nav">
+                <div class="full-wrapper align-center">
+                    <!-- logo sticky -->
+                    <div class="nav-logo-wrap-sticky">
+                        <a href="index.html" class="logo">
+                            <img src="images/logo.png" data-at2x="images/logo@2x.png" alt>
+                        </a>
+                    </div>
+                    <!-- / logo sticky -->
+                    <!-- menu mobile bars -->
+                    <div class="mobile-nav">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                    <!-- / menu mobile bars -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist">
+                            <!-- logo menu -->
+                            <li class="nav-logo-wrap">
+                                <a href="index.html" class="logo">
+                                    <img src="images/logo.png" data-at2x="images/logo@2x.png" alt>
+                                </a>
+                            </li>
+                            <!-- / logo menu -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- page section -->
+    <section class="page-section alt-color">
+        <div class="container align-center">
             <!--<h3 class="section-title bottom-line font-alt">Nice Shopping<span>Featured Products</span></h3> -->
-                <h3 class="section-title bottom-line font-alt"><span>Поиск</span></h3>
+            <h3 class="section-title bottom-line font-alt"><span>Поиск</span></h3>
             <!--    <div class="col-md-10 col-md-offset-1 mb-30">
                     <p>Donec rhoncus diam in lectus finibus, eget ultrices urna commodo. Fusce dignissim lobortis erat, tristique lobortis justo imperdiet at. Aliquam congue orci non pulvinar gravida.</p>
                 </div> -->
-                <div class="row mt-30">
-                    <!--  -->
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <form>
+            <div class="row mt-30">
+                <!--  -->
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <form>
+                        <div class="input-group mb-3">
                             <div class="input-group mb-3">
-                                <div class="input-group mb-3">
-                                    <input ng-model="name" type="text" class="form-control" placeholder="Введите компонент" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                    <div class="input-group-append">
-                                        <button ng-click="find()" class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
-                                    </div>
+                                <input ng-model="name" type="text" class="form-control" placeholder="Введите компонент"
+                                       aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button ng-click="find()" class="btn btn-outline-secondary" type="button"
+                                            id="button-addon2">Найти
+                                    </button>
                                 </div>
                             </div>
-                        </form>
-                        <table class="table table-sm">
-                          <thead>
-                          <tr>
-                              <th scope="col">{{msg}}</th>
-                          </tr>
-                          <tr>
-                              <th scope="col">{{show.type}}</th>
-                          </tr>
-                            <tr>
-                              <th scope="col">{{show.description}}</th>
-                            </tr>
-                          </thead>
+                        </div>
+                    </form>
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{msg}}</th>
+                        </tr>
 
-                        </table>
-                    </div>
-                    <!-- /scan + send-->
+                        <tr ng-repeat="c in components">
+                            <th scope="col">{{c.type}} = {{c.name}} = {{c.description}}</th>
+                        </tr>
+
+                        </thead>
+
+                    </table>
                 </div>
+                <!-- /scan + send-->
             </div>
-        </section>
-		<!-- /page section -->
-        <!-- go home -->
-        <div id="go-home">
-            <a href="index.html">
-        	    <i class="fas fa-home" style="padding-top: 9px;"></i>
-        	</a>
         </div>
-        <!-- /go home -->
+    </section>
+    <!-- /page section -->
+    <!-- go home -->
+    <div id="go-home">
+        <a href="index.html">
+            <i class="fas fa-home" style="padding-top: 9px;"></i>
+        </a>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="admin/js/component-manager.js"></script>
-    <!--
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
-    -->
+    <!-- /go home -->
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="admin/js/component-manager.js"></script>
+<!--
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+-->
 </body>
 </html>
