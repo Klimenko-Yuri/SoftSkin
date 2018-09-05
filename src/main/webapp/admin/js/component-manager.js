@@ -19,13 +19,12 @@ app.controller('action-message', function ($scope, $http) {
 app.controller('clicker', function ($scope, $http) {
     $scope.find = function () {
         $scope.msg = '';
+        $scope.components = null;
         $http.get(host + "/find-component/" + $scope.name)
             .then(function (response) {
-                component = $scope.show = response.data;
-                if (component != null) {
-                    $scope.id = component.id;
-                    $scope.description = component.description;
-                    $scope.type = component.type;
+                components = $scope.show = response.data;
+                if (components.length > 0) {
+                    $scope.components = components;
                 } else {
                     $scope.msg = 'Компонент ' + $scope.name + ' не найден';
                 }

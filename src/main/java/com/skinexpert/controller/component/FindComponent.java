@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Mihail Kolomiets on 10.08.18.
@@ -24,16 +25,16 @@ public class FindComponent extends HttpServlet {
         req.setCharacterEncoding("utf8");
 
         String name = req.getPathInfo().substring(1);
-        Component component = null;
+        List<Component> components = null;
         if (name.length() > 0) {
             try {
-                component = new ComponentService().findByName(name);
+                components = new ComponentService().findNameBySubstring(name);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        String outMessage = new Gson().toJson(component);
+        String outMessage = new Gson().toJson(components);
         resp.getWriter().write(outMessage);
     }
 }

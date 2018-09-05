@@ -7,6 +7,10 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -64,6 +68,24 @@ public class ComponentService {
         manager.getTransaction().commit();
 
         return componentList;
+    }
+
+    public List<Component> findNameBySubstring(String search) {
+        List<Component> components;
+        search = search.toUpperCase();
+
+        manager.getTransaction().begin();
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<Component> query = builder.createQuery(Component.class);
+        Root<Component> componentRoot = query.from(Component.class);
+        query.select(componentRoot);
+        Predicate predicate = builder.like(builder.upper(componentRoot.get("name")),
+                "%" + search + "%");
+        query.where(predicate);
+        components = manager.createQuery(query).getResultList();
+        manager.getTransaction().commit();
+
+        return components;
     }
 
     public Component deleteById(long id) {
