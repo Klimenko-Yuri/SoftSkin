@@ -123,10 +123,10 @@ module.exports = {
       filename: "./css/style.min.css"
     }),
     new CopyWebpackPlugin([
-      //   {
-      //   from: './src/fonts',
-      //   to: './fonts'
-      // },
+        {
+        from: './src/font',
+        to: './font'
+      },
       {
         from: './src/img',
         to: './img'

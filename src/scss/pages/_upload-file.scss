@@ -1,0 +1,82 @@
+.upload {
+
+
+  &__inner {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  &__file {
+    cursor: pointer;
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background-color: $main-color;
+    box-shadow: 0 0 0 2px #fff inset, 0 0 0 5px $main-color;
+    margin: 0 20px;
+    transition: all 0.3s;
+
+    &:hover {
+      box-shadow: 0 0 0 55px #fff inset, 0 0 0 5px $main-color;
+    }
+
+    &:hover .icon{
+      color: $main-color;
+    }
+
+    @media (max-width: 667px)  {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  label {
+    @extend %center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .icon {
+    color: #fff;
+    font-size: 50px;
+    transition: all 0.3s ease-out;
+
+    @media (max-width: 667px)  {
+      font-size: 30px;
+    }
+  }
+
+  .btn-send {
+    display: block;
+    width: 120px;
+    margin: 0 auto;
+    font-size: 15px;
+    padding: 14px 6px;
+    border-radius: 20px;
+
+    @media (max-width: 667px)  {
+      width: 100px;
+      padding: 9px 6px;
+    }
+  }
+
+}
+
+
+
+
+
+
+
+

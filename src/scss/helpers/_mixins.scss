@@ -1,0 +1,21 @@
+@mixin margin-right ($mr) {
+  margin-right: $mr;
+  &:last-child {margin-right: 0;}
+}
+
+@mixin margin-bottom ($mb) {
+  margin-bottom: $mb;
+  &:last-child {margin-bottom: 0;}
+}
+
+@mixin mq($width, $type: max) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == min {
+      $width: $width + 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}

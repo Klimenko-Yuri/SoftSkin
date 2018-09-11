@@ -1,0 +1,36 @@
+$footer-text-color: #9ca9a0;
+
+.footer {
+
+  background: #3a3e3b;
+  padding: 20px 0;
+  color: $footer-text-color;
+
+  &-inner {
+    @extend %space-between;
+
+    @media (max-width: 576px)  {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .policy {
+
+    @media (max-width: 576px)  {
+      margin-top: 8px;
+    }
+
+    &__link {
+      color: $footer-text-color;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+
+  }
+
+}
+

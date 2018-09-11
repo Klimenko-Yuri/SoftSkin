@@ -1,0 +1,17 @@
+.articles {
+
+
+  &__name {
+    display: block;
+    font-size: 20px;
+    line-height: 26px;
+    padding: 10px 6px;
+    color: #000;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.09);
+    transition: 0.3s;
+
+    &:hover {
+      color: $main-color;
+    }
+  }
+}

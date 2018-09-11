@@ -1,5 +1,35 @@
 <%= _.template(require('./../includes/header.html'))(data) %>
 
-<a href="load-image.html">link to load file</a>
+<section class="features section">
+    <div class="container">
+        <div class="features__list">
+            <div class="features__item">
+                <div class="features__icon">
+                    <a href="upload-file.html" class="features__link"></a>
+                    <i class="icon icon-picture"></i>
+                </div>
+                <h3 class="features__title">Выбрать файл</h3>
+                <span class="features__subtitle">Отсканировать эткетку
+                    <br> или загрузить из галереи</span>
+            </div>
+            <div class="features__item">
+                <div class="features__icon">
+                    <a href="search.html" class="features__link"></a>
+                    <i class="icon icon-search"></i>
+                </div>
+                <h3 class="features__title">Поиск</h3>
+                <span class="features__subtitle">Найти по названию</span>
+            </div>
+            <div class="features__item">
+                <div class="features__icon">
+                    <a href="wiki.html" class="features__link"></a>
+                    <i class="icon icon-book-open"></i>
+                </div>
+                <h3 class="features__title">База знаний</h3>
+                <span class="features__subtitle">Полезные статьи</span>
+            </div>
+        </div>
+    </div>
+</section>
 
 <%= _.template(require('./../includes/footer.html'))(data) %>

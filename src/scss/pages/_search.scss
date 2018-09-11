@@ -1,0 +1,40 @@
+.search {
+
+  &__inner {
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    border: solid 1px #c1ddbd;
+    border-radius: 6px;
+
+    @media (max-width: 414px)  {
+      width: 100%;
+    }
+  }
+
+  &__input {
+    display: inline-block;
+    width: 100%;
+    padding: 8px 70px 8px 8px;
+
+    &::placeholder{
+      color: #a9a9a9;
+    }
+
+  }
+
+  // added by Dima
+  &__hint {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  &__btn {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    padding: 8px 18px 9px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+}

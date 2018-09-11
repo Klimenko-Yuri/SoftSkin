@@ -1,0 +1,30 @@
+%center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+%space-between {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+%stretch {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+%responsive-img {
+  width: 100%;
+  height: auto;
+}
+
+%pseudo {
+  content: '';
+  display: block;
+  position: absolute;
+}

@@ -1,3 +1,19 @@
-///base imports
-@import "~normalize-scss/fork-versions/default/normalize";
-@import "vendors/variable";
+
+@import "helpers/main";
+
+@import "base/main";
+
+@import "layout/header";
+@import "layout/footer";
+
+@import "pages/home";
+@import "pages/upload-file";
+@import "pages/search";
+@import "pages/wiki";
+
+
+
+
+
+
+
