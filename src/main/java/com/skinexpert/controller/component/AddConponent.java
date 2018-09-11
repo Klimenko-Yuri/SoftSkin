@@ -4,11 +4,7 @@ import com.google.gson.Gson;
 import com.skinexpert.entity.Component;
 import com.skinexpert.entity.TypeComponent;
 import com.skinexpert.service.ComponentService;
-import com.skinexpert.util.Property;
-import com.skinexpert.validation.Valid;
-import com.skinexpert.validation.Validator;
-import com.skinexpert.validation.validBits.VMostAny;
-import com.skinexpert.validation.validBits.VNotEmpty;
+import com.skinexpert.validation.AddComponentValidation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,11 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
- * Created by Mihail Kolomiets on 09.08.18.
+ * Add component in database by response body(name, description, type)
+ * or change it, if id is present.
+ * Send JSON request like report string.
  */
 @WebServlet(urlPatterns = "/add-component")
 public class AddConponent extends HttpServlet {
@@ -37,15 +33,8 @@ public class AddConponent extends HttpServlet {
         String type = req.getParameter("type");
         String id = req.getParameter("id");
 
-        //init validation
-        Validator validator = new Validator(new LinkedList<>());
-
-        //prepare need validation function
-        validator.addToValidation(new VNotEmpty("Поле юзера пустое."));
-        validator.addToValidation(new VMostAny("Имя не может быть более 30 символов", 30));
-
         //do validation
-        addResult = validator.doValidation();
+        addResult = new AddComponentValidation().checkAllFields(name);
         if (addResult == null) {
 
             ComponentService componentService = new ComponentService();

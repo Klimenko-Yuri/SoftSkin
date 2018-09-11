@@ -3,24 +3,27 @@ package com.skinexpert.validation.validBits;
 import com.skinexpert.validation.Valid;
 
 /**
- * Created by Mihail Kolomiets on 8/20/18.
+ * Check string on length
  */
-public class VMostAny implements Valid{
+public class VMostAny implements Valid {
 
+    /**
+     * Description
+     */
     private String invalidCheck;
-    private int howMuch;
+    private int length;
 
-    public VMostAny(String invalidCheckMassage, int howMuch) {
+    public VMostAny(String invalidCheckMassage, int length) {
         invalidCheck = invalidCheckMassage;
-        this.howMuch = howMuch;
+        this.length = length;
     }
 
     @Override
     public String check(Object o) {
-        if(!(o instanceof String)) {
+        if (!(o instanceof String)) {
             return "its no string";
         }
-        if (((String) o).length() > howMuch) {
+        if (((String) o).length() > length) {
             return invalidCheck;
         }
 

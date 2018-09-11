@@ -5,5 +5,8 @@ package com.skinexpert.validation;
  */
 public interface Valid {
 
+    /**
+     * @return description of trouble
+     */
     String check(Object o);
 }

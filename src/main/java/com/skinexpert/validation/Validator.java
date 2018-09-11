@@ -3,12 +3,11 @@ package com.skinexpert.validation;
 import java.util.List;
 
 /**
- * Created by Mihail Kolomiets on 8/20/18.
+ * .
  */
 public class Validator {
 
     private List<Valid> validList;
-    private Object o;
 
     public Validator(List validList) {
         this.validList = validList;
@@ -18,7 +17,7 @@ public class Validator {
         validList.add(v);
     }
 
-    public String doValidation() {
+    public String doValidation(Object o) {
 
         String result;
 

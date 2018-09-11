@@ -3,10 +3,13 @@ package com.skinexpert.validation.validBits;
 import com.skinexpert.validation.Valid;
 
 /**
- * Created by Mihail Kolomiets on 8/20/18.
+ * Check String by context
  */
 public class VNotEmpty implements Valid {
 
+    /**
+     * Description of trouble
+     */
     private String invalidCheck;
 
     public VNotEmpty(String invalidCheckMessage) {
@@ -15,7 +18,7 @@ public class VNotEmpty implements Valid {
 
     @Override
     public String check(Object o) {
-        if(!(o instanceof String)) {
+        if (!(o instanceof String)) {
             return "its no string";
         }
 
