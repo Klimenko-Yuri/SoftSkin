@@ -20,7 +20,7 @@
   <title>Skin Expert</title>
 </head>
 
-<body>
+<body ng-app="cm" ng-controller="clicker">
   <header class="header">
     <div class="logo">
       <img src="img/logo.png" alt="" class="logo__link">
@@ -32,21 +32,21 @@
     <div class="container">
       <form action="#" class="search">
         <div class="search__inner">
-          <input type="text" placeholder="Введите компонент" class="search__input">
-          <button class="btn search__btn">Найти</button>
+          <input ng-model="name" type="text" placeholder="Введите компонент" class="search__input">
+          <button ng-click="find()" class="btn search__btn">Найти</button>
         </div>
       </form>
     </div>
-
+    <div> <!--its response if some bad -->
+      <th scope="col">{{msg}}</th>
+    </div>
+    <div ng-repeat="c in components"> <!-- it response of searche-->
+      {{c.type}} компонент {{c.name}} <br> Описание: {{c.description}}
+    </div>
     <a href="index.html" class="home-btn">
         <i class="icon-home"></i>
     </a>
   </section>
-
-
-
-
-
 
   <footer class="footer">
     <div class="container">
@@ -60,7 +60,14 @@
     </div>
   </footer>
 
+  <!-- un for work sorry
   <script src="js/bundle.js" defer></script>
+  -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="admin/js/component-manager.js"></script>
+
+
 </body>
 
 </html>
