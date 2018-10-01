@@ -39,8 +39,8 @@ public class AddConponent extends HttpServlet {
 
         for (int i = 1; i < body.length; i += 4) {
             if (body.length > i + 2)
-            params.put(body[i], body[i + 2]);
-            System.out.println(body[i] + " -> " + body[i+2]);
+                params.put(body[i], body[i + 2]);
+            System.out.println(body[i] + " -> " + body[i + 2]);
         }
 
         String name = params.get("name");
@@ -49,6 +49,11 @@ public class AddConponent extends HttpServlet {
         String id = params.get("id");
 
         Component component = new Component();
+
+
+        if (id == null) {
+            id = "undefined";
+        }
         if (!id.equals("undefined")) {
             component.setId(Long.valueOf(id));
             addResult = "Компонент изменен";
