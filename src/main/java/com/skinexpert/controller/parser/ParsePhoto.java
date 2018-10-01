@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +26,9 @@ import java.util.Set;
 public class ParsePhoto extends HttpServlet {
 
     ComponentService service = new ComponentService();
+    //2Mb
+    private final Integer FILEMAXSIZE = 2000000;
+    private String outMessage;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,33 +41,38 @@ public class ParsePhoto extends HttpServlet {
         tesseract.setLanguage("rus");
 
         InputStream is = filePart.getInputStream();
-
-        byte[] buffer = new byte[is.available()];
-        is.read(buffer);
-
-        String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
-        File targetFile = new File(Property.TESSDATA + "/tessdata/img/" + fileName);
-
-        OutputStream outStream = new FileOutputStream(targetFile);
-        outStream.write(buffer);
-
-        String parseResult ="";
-
-        try {
-            parseResult = tesseract.doOCR(targetFile);
-        } catch (TesseractException e) {
-            for (StackTraceElement ste : e.getStackTrace()) {
-                parseResult += ste + "\n";
-            }
+        int fileSize = is.available();
+        System.out.println(fileSize);
+        if (fileSize > FILEMAXSIZE) {
+            outMessage = new Gson().toJson("file so big");
         }
+        else {
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
 
-        System.out.println(parseResult);
+            String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
+            File targetFile = new File(Property.TESSDATA + "/tessdata/img/" + fileName);
 
-        Set<Component> contain = findInBase(parseResult);
+            OutputStream outStream = new FileOutputStream(targetFile);
+            outStream.write(buffer);
 
-        String outMessage = new Gson().toJson(contain);
+            String parseResult = "";
+
+            try {
+                parseResult = tesseract.doOCR(targetFile);
+            } catch (TesseractException e) {
+                for (StackTraceElement ste : e.getStackTrace()) {
+                    parseResult += ste + "\n";
+                }
+            } finally {
+                targetFile.delete();
+            }
+
+            Set<Component> contain = findInBase(parseResult);
+
+            outMessage = new Gson().toJson(contain);
+        }
         resp.getWriter().write(outMessage);
-
     }
 
     private static String getSubmittedFileName(Part part) {
