@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.skinexpert.entity.Component;
 import com.skinexpert.entity.TypeComponent;
 import com.skinexpert.service.ComponentService;
-import com.skinexpert.util.Property;
+import com.skinexpert.validation.AddComponentValidation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +18,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Created by Mihail Kolomiets on 09.08.18.
+ * Add component in database by response body(name, description, type)
+ * or change it, if id is present.
+ * Send JSON request like report string.
  */
 @WebServlet(urlPatterns = "/add-component")
 public class AddConponent extends HttpServlet {
