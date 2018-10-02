@@ -69,7 +69,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="edit-component.html">
+                    <a href="change-component.html">
                         <i class="ti-pencil"></i>
                         <p>Редактировать компонент</p>
                     </a>
@@ -133,18 +133,21 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Добавить компонент</h4>
+                            <h4 class="title">Добавить компонент </h4>
                         </div>
-                        <div class="content">
-                            <div ng-controller="action-message">
-                                {{message}}
-                            </div>
-                            <form action="/skin-expert/add-component" method="post">
+                        <div ng-controller="clicker" ng-model="msg" class="content">
+
+                            {{msg}}
+								<div class="alert alert-success">
+									<span>{{msg}}</span>
+								</div>
+
+                            <form>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Название:</label>
-                                            <input type="text" name="name" ng-required="true" class="form-control border-input" placeholder="Краткое название компонента">
+                                            <input ng-model="name" type="text" ng-required="true" class="form-control border-input" placeholder="Краткое название компонента">
                                         </div>
                                     </div>
                                 </div>
@@ -153,7 +156,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Описание:</label>
-                                            <input type="text" name="description" ng-required="true" class="form-control border-input" placeholder="Описание компонента">
+                                            <input type="text" ng-model="description" ng-required="true" class="form-control border-input" placeholder="Описание компонента">
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +164,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Тип</label>
-                                                <select name="type" class="form-control" ng-required="true">
+                                                <select ng-model="type" class="form-control" ng-required="true">
                                                     <option value="D">Danger</option>
                                                     <option value="M">Middle</option>
                                                     <option value="G">Good</option>
@@ -171,7 +174,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Добавить</button>
+                                    <button ng-click="add()" class="btn btn-info btn-fill btn-wd">Добавить</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </form>

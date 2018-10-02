@@ -16,15 +16,34 @@ app.controller('action-message', function ($scope, $http) {
         });
 });
 
-app.controller('finder', function ($scope, $http) {
-    $scope.find = function() {
-        $scope.show = true;
-        $http.post(host + "/find-component/" + $scope.name)
+app.controller('clicker', function ($scope, $http) {
+    $scope.find = function () {
+        $scope.msg = '';
+        $scope.components = null;
+        $http.get(host + "/find-component/" + $scope.name)
+            .then(function (response) {
+                components = $scope.show = response.data;
+                if (components.length > 0) {
+                    $scope.components = components;
+                } else {
+                    $scope.msg = 'Компонент ' + $scope.name + ' не найден';
+                }
+            });
+
+    };
+
+    $scope.add = function () {
+
+        var params = {
+            name: $scope.name,
+            description: $scope.description,
+            type: $scope.type,
+            id: $scope.id + ''
+        };
+
+        $http.post(host + "/add-component", params)
             .then(function (response) {
                 $scope.msg = response.data;
-                if($scope.msg != null) {
-                    $scope.add = true;
-                }
             });
 
     }
@@ -35,7 +54,7 @@ app.controller('get-all', function ($scope, $http) {
         .then(function (response) {
             $scope.components = response.data;
         });
-    $scope.del = function(id) {
+    $scope.del = function (id) {
         $http.delete(host + "/delete-component/" + id)
             .then(function (response) {
                 $scope.msg = response.data;

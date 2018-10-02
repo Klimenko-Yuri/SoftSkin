@@ -6,9 +6,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ import java.util.List;
  */
 public class ComponentService {
 
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory("SoftSkin");
     private EntityManager manager = factory.createEntityManager();
 
@@ -23,6 +26,16 @@ public class ComponentService {
         manager.getTransaction().begin();
         component = manager.merge(component);
         manager.getTransaction().commit();
+        return component;
+    }
+
+    public Component get(long id) {
+        Component component;
+
+        manager.getTransaction().begin();
+        component = manager.find(Component.class, id);
+        manager.getTransaction().commit();
+
         return component;
     }
 
@@ -55,6 +68,24 @@ public class ComponentService {
         manager.getTransaction().commit();
 
         return componentList;
+    }
+
+    public List<Component> findNameBySubstring(String search) {
+        List<Component> components;
+        search = search.toUpperCase();
+
+        manager.getTransaction().begin();
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<Component> query = builder.createQuery(Component.class);
+        Root<Component> componentRoot = query.from(Component.class);
+        query.select(componentRoot);
+        Predicate predicate = builder.like(builder.upper(componentRoot.get("name")),
+                "%" + search + "%");
+        query.where(predicate);
+        components = manager.createQuery(query).getResultList();
+        manager.getTransaction().commit();
+
+        return components;
     }
 
     public Component deleteById(long id) {

@@ -11,7 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Add component in database by response body(name, description, type)
@@ -24,47 +28,63 @@ public class AddConponent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        ComponentService componentService = new ComponentService();
+
         resp.setContentType("application/json; charset = utf8");
         req.setCharacterEncoding("utf8");
+        //todo validation
+        String addResult = null;
 
-        String addResult;
-        String name = req.getParameter("name");
-        String description = req.getParameter("description");
-        String type = req.getParameter("type");
-        String id = req.getParameter("id");
+        Map<String, String> params = new HashMap<>();
 
-        //do validation
-        addResult = new AddComponentValidation().checkAllFields(name);
-        if (addResult == null) {
+        String[] body = req.getReader().lines().collect(Collectors.joining()).split("\"");
 
-            ComponentService componentService = new ComponentService();
-            Component component = new Component();
+        for (int i = 1; i < body.length; i += 4) {
+            if (body.length > i + 2)
+                params.put(body[i], body[i + 2]);
+            System.out.println(body[i] + " -> " + body[i + 2]);
+        }
 
-            if (id != null) {
-                component.setId(Long.valueOf(id));
-                addResult = "Компонент изменен";
+        String name = params.get("name");
+        String description = params.get("description");
+        String type = params.get("type");
+        String id = params.get("id");
+
+        Component component = new Component();
+
+
+        if (id == null) {
+            id = "undefined";
+        }
+        if (!id.equals("undefined")) {
+            component.setId(Long.valueOf(id));
+            addResult = "Компонент изменен";
+        }
+
+        System.out.println("name -> " + name + "\ndescription -> " + description);
+
+        component.setName(name);
+        component.setDescription(description);
+        component.setType(TypeComponent.DANGER.getTypeByAtribute(type));
+        component.setVisiable(true);
+
+        try {
+            if (component.getId() == 0 && componentService.findByName(name) != null) {
+                addResult = "Компонент " + name + " уже есть в базе";
+            } else {
+                component = componentService.addComponent(component);
             }
-            component.setName(name);
-            component.setDescription(description);
-            component.setType(TypeComponent.DANGER.getTypeByAtribute(type));
-
-            try {
-                if (component.getId() == 0 && componentService.findByName(name) != null) {
-                    addResult = "Компонент " + name + " уже есть в базе";
-                } else {
-                    component = componentService.addComponent(component);
-                }
-            } catch (Exception e) {
-                addResult = e.toString();
-            }
-            if (component.getId() != 0 && addResult == null) {
-                addResult = "Компонент " + component.getName() + " добавлен в базу";
-            } else if (component.getId() == 0) {
-                addResult = "Не удалось добавить компонент т.к: " + addResult;
-            }
+        } catch (Exception e) {
+            addResult = e.toString();
+        }
+        if (component.getId() != 0 && addResult == null) {
+            addResult = "Компонент " + component.getName() + " добавлен в базу";
+        } else if (component.getId() == 0) {
+            addResult = "Не удалось добавить компонент т.к: " + addResult;
         }
 
         String outMessage = new Gson().toJson(addResult);
         resp.getWriter().write(outMessage);
+
     }
 }

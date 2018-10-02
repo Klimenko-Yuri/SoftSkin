@@ -24,19 +24,21 @@ public class DeleteComponent extends HttpServlet {
         resp.setContentType("application/json; charset = utf8");
         req.setCharacterEncoding("utf8");
 
-        String message = "";
-        Component component = null;
+        String message;
+        Component component;
+        ComponentService service = new ComponentService();
+        String deleteItem =req.getPathInfo().substring(1);
 
         try {
-            int id = Integer.valueOf(req.getPathInfo().substring(1));
+            int id = Integer.valueOf(deleteItem);
             System.out.println(id);
-            component = new ComponentService().deleteById(id);
-        } catch (NumberFormatException e) {
-            message = "Incorrect value of id";
-        }
-
-        if (component != null) {
+            component = service.deleteById(id);
             message = "Компонент " + component.getName() + " удален";
+        } catch (NumberFormatException e) {
+            component = service.findByName(deleteItem);
+            component.setVisiable(false);
+            service.addComponent(component);
+            message = "Компонент " + component.getName() + " скрыт от поиска";
         }
 
         String outMessage = new Gson().toJson(message);

@@ -1,9 +1,10 @@
 package com.skinexpert.util;
 
 /**
- * Help brige
+ * project paths
  */
 public class Property {
     public static final String HOST = "/skin-expert";
+    public static final String TESSDATA = "/home/kosmetika/";
 
 }
