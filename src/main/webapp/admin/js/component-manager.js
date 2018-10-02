@@ -25,6 +25,7 @@ app.controller('clicker', function ($scope, $http) {
                 components = $scope.show = response.data;
                 if (components.length > 0) {
                     $scope.components = components;
+                    $scope.id = components[0].id;
                 } else {
                     $scope.msg = 'Компонент ' + $scope.name + ' не найден';
                 }

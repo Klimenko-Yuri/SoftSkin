@@ -1,7 +1,7 @@
 package com.skinexpert.entity;
 
 /**
- * Created by Mihail Kolomiets on 10.08.18.
+ * Represent type of components
  */
 public enum TypeComponent {
     DANGER("D"),
@@ -18,13 +18,13 @@ public enum TypeComponent {
         return atribute;
     }
 
-    public TypeComponent getTypeByAtribute(String type) {
+    public static TypeComponent getTypeByAtribute(String type) {
         if (type == null) {
             return MIDDLE;
         }
         type = type.toUpperCase();
-        for(TypeComponent typeComponent : TypeComponent.values()) {
-            if(typeComponent.getAtribute().equals(type))
+        for (TypeComponent typeComponent : TypeComponent.values()) {
+            if (typeComponent.getAtribute().equals(type))
                 return typeComponent;
         }
         return MIDDLE;
