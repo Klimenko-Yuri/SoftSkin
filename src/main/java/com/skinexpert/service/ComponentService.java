@@ -22,6 +22,19 @@ public class ComponentService {
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory("SoftSkin");
     private EntityManager manager = factory.createEntityManager();
 
+    public List<Component> getListOfComponents(List<String> list) {
+
+        manager.getTransaction().begin();
+
+        Session session = (Session) manager.getDelegate();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Component.class);
+        List<Component> name = criteria.add(Restrictions.in("name", list)).list();
+        session.getTransaction().commit();
+        return name;
+
+    }
+
     public Component addComponent(Component component) {
         manager.getTransaction().begin();
         component = manager.merge(component);
