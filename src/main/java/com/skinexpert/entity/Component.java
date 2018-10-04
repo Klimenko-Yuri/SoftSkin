@@ -1,6 +1,7 @@
 package com.skinexpert.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Mihail Kolomiets on 09.08.18.
@@ -20,6 +21,10 @@ public class Component {
 
     @Column
     private TypeComponent type;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Product> productList;
+
 
     @Column(nullable = false)
     private boolean visiable;
