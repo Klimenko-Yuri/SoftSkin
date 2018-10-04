@@ -1,6 +1,7 @@
 package com.skinexpert.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 public class TypeProduct {
@@ -36,5 +37,16 @@ public class TypeProduct {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @OneToMany(mappedBy = "typeProduct")
+    private Collection<Product> product;
+
+    public Collection<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(Collection<Product> product) {
+        this.product = product;
     }
 }
