@@ -12,28 +12,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-@WebServlet(urlPatterns = "/get-list-of-component")
+@WebServlet(urlPatterns = "/get-list-of-component/*")
 public class FindLissOfComponents extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json; charset = utf8");
         req.setCharacterEncoding("utf8");
         ComponentService service = new  ComponentService();
-
-        List<String> requestString = req.getReader().lines().collect(Collectors.toList());
-
-        if(requestString==null){
-            resp.getWriter().write("Format is incorrect");;
-        }
+//        resp.getWriter().write("asd");
+        List<String> requestString = Arrays.asList(req.getParameter("list").split(";"));
 
         if(requestString.size()==0){
-            resp.getWriter().write(outMessage);
+//            resp.getWriter().write("Format is incorrect");;
         }
         String outMessage = new Gson().toJson(service.getListOfComponents(requestString));
         resp.getWriter().write(outMessage);
+
     }
 }
