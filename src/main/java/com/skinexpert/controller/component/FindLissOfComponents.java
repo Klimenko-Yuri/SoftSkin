@@ -25,6 +25,14 @@ public class FindLissOfComponents extends HttpServlet{
         ComponentService service = new  ComponentService();
 
         List<String> requestString = req.getReader().lines().collect(Collectors.toList());
+
+        if(requestString==null){
+            resp.getWriter().write("Format is incorrect");;
+        }
+
+        if(requestString.size()==0){
+            resp.getWriter().write(outMessage);
+        }
         String outMessage = new Gson().toJson(service.getListOfComponents(requestString));
         resp.getWriter().write(outMessage);
     }
