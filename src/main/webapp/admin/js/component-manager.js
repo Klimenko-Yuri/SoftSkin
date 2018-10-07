@@ -22,12 +22,16 @@ app.controller('clicker', function ($scope, $http) {
         $scope.components = null;
         $http.get(host + "/find-component/" + $scope.name)
             .then(function (response) {
-                components = $scope.show = response.data;
+                components = response.data;
                 if (components.length > 0) {
                     $scope.components = components;
                     $scope.id = components[0].id;
+                    $scope.description = components[0].description;
+                    $scope.type = components[0].type;
+                    $scope.show = true;
                 } else {
                     $scope.msg = 'Компонент ' + $scope.name + ' не найден';
+                    $scope.show = false;
                 }
             });
 

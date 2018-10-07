@@ -26,8 +26,8 @@ import java.util.Set;
 public class ParsePhoto extends HttpServlet {
 
     ComponentService service = new ComponentService();
-    //2Mb
-    private final Integer FILEMAXSIZE = 2000000;
+    //10Mb
+    private final Integer FILEMAXSIZE = 10000000;
     private String outMessage;
 
     @Override
@@ -67,6 +67,8 @@ public class ParsePhoto extends HttpServlet {
             } finally {
                 targetFile.delete();
             }
+
+            System.out.println(parseResult);
 
             Set<Component> contain = findInBase(parseResult);
 
