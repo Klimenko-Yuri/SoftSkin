@@ -20,10 +20,12 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/add-component")
 public class AddComponent extends HttpServlet {
 
-    ComponentService componentService = new ComponentService();
+    ComponentService componentService;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        componentService = new ComponentService();
 
         resp.setContentType("application/json; charset = utf8");
         req.setCharacterEncoding("utf8");
@@ -42,6 +44,7 @@ public class AddComponent extends HttpServlet {
 
     private String addComponent(Component component) {
         String action = "Компонент " + component.getName();
+
         if (component.getId() == 0 && componentService.findByName(component.getName()) != null) {
             return action + " уже есть в базе";
         } else {
@@ -49,6 +52,7 @@ public class AddComponent extends HttpServlet {
             if (component.getId() == 0)
                 return action + " добавлен в базу";
         }
+
         return action + " изменен";
     }
 

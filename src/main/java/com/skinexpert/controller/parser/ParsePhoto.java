@@ -25,15 +25,16 @@ import java.util.Set;
 @MultipartConfig
 public class ParsePhoto extends HttpServlet {
 
-    ComponentService service = new ComponentService();
-    //2Mb
-    private final Integer FILEMAXSIZE = 2000000;
+    ComponentService service;
+    //10Mb
+    private final Integer FILEMAXSIZE = 10000000;
     private String outMessage;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json; charset = utf8");
 
+        service = new ComponentService();
         Part filePart = req.getPart("photo");
 
         ITesseract tesseract = new Tesseract();
@@ -45,8 +46,7 @@ public class ParsePhoto extends HttpServlet {
         System.out.println(fileSize);
         if (fileSize > FILEMAXSIZE) {
             outMessage = new Gson().toJson("file so big");
-        }
-        else {
+        } else {
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
 
@@ -67,6 +67,8 @@ public class ParsePhoto extends HttpServlet {
             } finally {
                 targetFile.delete();
             }
+
+            System.out.println(parseResult);
 
             Set<Component> contain = findInBase(parseResult);
 
@@ -101,7 +103,7 @@ public class ParsePhoto extends HttpServlet {
                 name = component.getName();
                 name = name.toUpperCase();
 
-                if ( name.length() <= parseText.length() - textPosition
+                if (name.length() <= parseText.length() - textPosition
                         && name.charAt(0) == parseText.charAt(textPosition)             //now find begin
                         & name.equals(parseText.substring(textPosition, textPosition + name.length()))) {
 
