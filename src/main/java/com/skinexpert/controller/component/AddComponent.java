@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.skinexpert.entity.Component;
 import com.skinexpert.service.ComponentService;
 import com.skinexpert.validation.AddComponentValidation;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Add component in database by response body(name, description, type)
@@ -19,41 +22,58 @@ import java.io.IOException;
  */
 @WebServlet(urlPatterns = "/add-component")
 public class AddComponent extends HttpServlet {
-
-    ComponentService componentService;
+    private Logger logger;
+    private ComponentService componentService;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void init() {
+        this.logger = LogManager.getLogger(this.getClass());
+        this.componentService = new ComponentService();
+    }
 
-        componentService = new ComponentService();
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         resp.setContentType("application/json; charset = utf8");
-        req.setCharacterEncoding("utf8");
+        try {
+            req.setCharacterEncoding("utf8");
+        } catch (UnsupportedEncodingException e) {
+            logger.error("Error while setCharset process.", e);
+            throw new RuntimeException(e);
+        }
 
         Component component = new Component();
         String addResult = new AddComponentValidation().checkRequestData(req, component);
 
         component.setVisiable(true);
 
-        if (addResult == null)
+        if (addResult == null) {
             addResult = addComponent(component);
+        }
 
         String outMessage = new Gson().toJson(addResult);
-        resp.getWriter().write(outMessage);
+        try {
+            resp.getWriter().write(outMessage);
+        } catch (IOException e) {
+            logger.error("Error while creating response message.", e);
+            throw new RuntimeException(e);
+        }
     }
 
     private String addComponent(Component component) {
-        String action = "Компонент " + component.getName();
+        StringBuilder action = new StringBuilder("Компонент ");
+        action.append(component.getName());
 
         if (component.getId() == 0 && componentService.findByName(component.getName()) != null) {
-            return action + " уже есть в базе";
+            action.append(" уже есть в базе");
+            return action.toString();
         } else {
             componentService.addComponent(component);
-            if (component.getId() == 0)
-                return action + " добавлен в базу";
+            if (component.getId() == 0) {
+                action.append(" добавлен в базу");
+                return action.toString();
+            }
         }
-
-        return action + " изменен";
+        action.append(" изменен");
+        return action.toString();
     }
-
 }
