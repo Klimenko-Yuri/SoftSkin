@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Mihail Kolomiets on 15.08.18.
+ * Created by Mihail 1Kolomiets on 15.08.18.
  */
 @WebServlet(urlPatterns = "/get-all-component")
 public class GetAllComponents extends HttpServlet {
