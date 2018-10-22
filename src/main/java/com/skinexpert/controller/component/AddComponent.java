@@ -23,12 +23,11 @@ import java.io.UnsupportedEncodingException;
 @WebServlet(urlPatterns = "/add-component")
 public class AddComponent extends HttpServlet {
     private Logger logger;
-    private ComponentService componentService;
+    private static final ComponentService componentService = ComponentService.getInstance();
 
     @Override
     public void init() {
         this.logger = LogManager.getLogger(this.getClass());
-        this.componentService = new ComponentService();
     }
 
     @Override

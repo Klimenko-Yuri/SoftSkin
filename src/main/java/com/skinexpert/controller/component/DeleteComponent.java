@@ -19,13 +19,12 @@ import java.io.UnsupportedEncodingException;
 @WebServlet(urlPatterns = "/delete-component/*")
 public class DeleteComponent extends HttpServlet {
     private Logger logger;
-    private ComponentService componentService;
+    private static final ComponentService componentService = ComponentService.getInstance();
     private String message = "Компонент %s %s";
 
     @Override
     public void init() {
         this.logger = LogManager.getLogger(this.getClass());
-        this.componentService = new ComponentService();
     }
 
     @Override

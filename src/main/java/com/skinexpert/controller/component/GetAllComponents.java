@@ -20,12 +20,11 @@ import java.util.List;
 @WebServlet(urlPatterns = "/get-all-component")
 public class GetAllComponents extends HttpServlet {
     private Logger logger;
-    private ComponentService componentService;
+    private static final ComponentService componentService = ComponentService.getInstance();
 
     @Override
     public void init() {
         this.logger = LogManager.getLogger(this.getClass());
-        this.componentService = new ComponentService();
     }
 
     @Override
