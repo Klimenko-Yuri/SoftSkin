@@ -22,6 +22,17 @@ public class ComponentService {
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory("SoftSkin");
     private EntityManager manager = factory.createEntityManager();
 
+    private ComponentService() {
+    }
+
+    private static class ComponentServiceHolder {
+        private static final ComponentService INSTANCE = new ComponentService();
+    }
+
+    public static ComponentService getInstance() {
+        return ComponentServiceHolder.INSTANCE;
+    }
+
     public Component addComponent(Component component) {
         manager.getTransaction().begin();
         component = manager.merge(component);
