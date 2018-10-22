@@ -21,6 +21,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/find-component/*")
 public class FindComponent extends HttpServlet {
     private Logger logger;
+    private static final ComponentService componentService = ComponentService.getInstance();
 
     @Override
     public void init() {
@@ -41,7 +42,7 @@ public class FindComponent extends HttpServlet {
         String name = req.getPathInfo().substring(1);
         logger.info("Trying to get components list");
         List<Component> components = (name.length() > 0 ?
-                new ComponentService().findNameBySubstring(name) : Collections.emptyList());
+                componentService.findNameBySubstring(name) : Collections.emptyList());
 
         String outMessage = new Gson().toJson(components);
         try {
