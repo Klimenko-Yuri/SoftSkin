@@ -44,17 +44,29 @@ public class ParsePhoto extends HttpServlet {
         InputStream is = filePart.getInputStream();
         int fileSize = is.available();
         System.out.println(fileSize);
+        String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
+
+        // mini validation // todo with validator
         if (fileSize > FILEMAXSIZE) {
             outMessage = new Gson().toJson("file so big");
-        } else {
-            byte[] buffer = new byte[is.available()];
-            is.read(buffer);
+        } else if (fileSize == 0){
+            outMessage = new Gson().toJson("where file issue?");
+        } else if (fileName.length() == 0) {
+            outMessage = new Gson().toJson("it's realy file without name?");
+        }
 
-            String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
+        else {
             File targetFile = new File(Property.TESSDATA + "/tessdata/img/" + fileName);
 
-            OutputStream outStream = new FileOutputStream(targetFile);
-            outStream.write(buffer);
+            if (!targetFile.exists()) {
+                byte[] buffer = new byte[is.available()];
+                is.read(buffer);
+                OutputStream outStream = new FileOutputStream(targetFile);
+                outStream.write(buffer);
+                outStream.close();
+            } else {
+                System.out.println("file is exist");
+            }
 
             String parseResult = "";
 
@@ -66,9 +78,10 @@ public class ParsePhoto extends HttpServlet {
                 }
             } finally {
                 targetFile.delete();
+                is.close();
             }
 
-            System.out.println(parseResult);
+            System.out.println(parseResult);//todo log of something else
 
             Set<Component> contain = findInBase(parseResult);
 
