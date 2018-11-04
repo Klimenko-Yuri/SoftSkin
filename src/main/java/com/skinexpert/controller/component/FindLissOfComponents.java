@@ -24,13 +24,15 @@ public class FindLissOfComponents extends HttpServlet{
         resp.setContentType("application/json; charset = utf8");
         req.setCharacterEncoding("utf8");
         ComponentService service = new  ComponentService();
-//        resp.getWriter().write("asd");
+
         List<String> requestString = Arrays.asList(req.getParameter("list").split(";"));
 
+        String outMessage;
         if(requestString.size()==0){
-//            resp.getWriter().write("Format is incorrect");;
+            outMessage = "['error' : 'Format is incorrect']";
+        } else {
+            outMessage = new Gson().toJson(service.getListOfComponents(requestString));
         }
-        String outMessage = new Gson().toJson(service.getListOfComponents(requestString));
         resp.getWriter().write(outMessage);
 
     }

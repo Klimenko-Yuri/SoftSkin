@@ -31,8 +31,7 @@ public class ComponentService {
      */
     public List<Component> getListOfComponents(List<String> list) {
 
-//        manager.getTransaction().begin();
-
+        manager.getTransaction().begin();
         Session session = (Session) manager.getDelegate();
         Criteria criteria = session.createCriteria(Component.class);
         List<Component> name = criteria.add(Restrictions.in("name", list)).list();
