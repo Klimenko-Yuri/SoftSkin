@@ -28,28 +28,33 @@
   </header>
 
   <section class="section">
-    {{2+5}}
+
     <h2 class="main-title">Загрузить фото</h2>
     <div ng-controller="parse" class="container">
-      <!-- this form NEED any change -->
 
-      {{1+5}}
-        <label for="loadImg" >Выбрать файл</label>
-        <input ng-model="photo" type='file' id="loadImg"/>
-        <button ng-click="getParseResult">Сканировать</button>
+        <label>Выбрать файл</label>
+        <input id="photo" type='file'/>
+        <button ng-click="getParseResult()">Сканировать</button>
+      <br>
+      <br>
 
+      <!--This div contain element by wait of parse photo -->
+      <div ng-show="waitInfoShow">{{waitInfo}}</div>
+
+      <!-- This div contain parse result -->
+      <div ng-repeat="component in components">
+        <div>
+          {{component.name}} - {{component.type}}.
+          <br> {{component.description}}
+          <hr>
+        </div>
+      </div>
     </div>
 
     <a href="index.html" class="home-btn">
         <i class="icon-home"></i>
     </a>
   </section>
-
-
-
-
-  https://youtu.be/g7DSMdv48HU?t=5630
-  https://youtu.be/g7DSMdv48HU?t=20418
 
   <footer class="footer">
     <div class="container">
