@@ -22,6 +22,25 @@ public class ComponentService {
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory("SoftSkin");
     private EntityManager manager = factory.createEntityManager();
 
+    /**
+     * Find all names of component by list in the base.
+     * Added by Yuri K.
+     *
+     * @param list - names of search components
+     * @return components list by names
+     */
+    public List<Component> getListOfComponents(List<String> list) {
+
+//        manager.getTransaction().begin();
+
+        Session session = (Session) manager.getDelegate();
+        Criteria criteria = session.createCriteria(Component.class);
+        List<Component> name = criteria.add(Restrictions.in("name", list)).list();
+        session.getTransaction().commit();
+        return name;
+
+    }
+
     public Component addComponent(Component component) {
         manager.getTransaction().begin();
         component = manager.merge(component);

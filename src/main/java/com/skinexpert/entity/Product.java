@@ -3,12 +3,9 @@ package com.skinexpert.entity;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by Mihail Kolomiets on 09.08.18.
- */
 @Entity
-public class Component {
 
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -19,22 +16,14 @@ public class Component {
     @Column
     private String description;
 
-    @Column
-    private TypeComponent type;
-
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Product> productList;
+    private List<Component> componentList;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idProduct")
+    private TypeProduct typeProduct;
 
-    @Column(nullable = false)
-    private boolean visiable;
-
-    public TypeComponent getType() {
-        return type;
-    }
-
-    public void setType(TypeComponent type) {
-        this.type = type;
+    public Product() {
     }
 
     public long getId() {
@@ -61,11 +50,19 @@ public class Component {
         this.description = description;
     }
 
-    public boolean isVisiable() {
-        return visiable;
+    public List<Component> getComponentList() {
+        return componentList;
     }
 
-    public void setVisiable(boolean visiable) {
-        this.visiable = visiable;
+    public void setComponentList(List<Component> componentList) {
+        this.componentList = componentList;
+    }
+
+    public TypeProduct getTypeProduct() {
+        return typeProduct;
+    }
+
+    public void setTypeProduct(TypeProduct typeProduct) {
+        this.typeProduct = typeProduct;
     }
 }
