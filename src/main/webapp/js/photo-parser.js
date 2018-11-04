@@ -9,7 +9,8 @@ var host = "/skin-expert";
 
 app.controller('parse', function ($scope, $http) {
 
-    $scope.waitInfoShow = false;
+    $scope.waitInfoShow =
+        $scope.showFind = false;
 
     var config = {
         headers: {
@@ -20,7 +21,7 @@ app.controller('parse', function ($scope, $http) {
 
     $scope.getParseResult = function () {
 
-        $scope.components = "";
+        $scope.components = $scope.handleComponents = "";
         //this may be any post or interesting info
         $scope.waitInfo = "Идет сканирование картинки...";
         $scope.waitInfoShow = true;
@@ -39,6 +40,15 @@ app.controller('parse', function ($scope, $http) {
                 else {
                     $scope.waitInfo = "Не распарсило ничего интересного"
                 }
+                $scope.showFind = true;
             });
     };
+
+    //handle multiply find
+    $scope.find = function () {
+        $http.get(host + "/get-list-of-component?list=" + $scope.comstr)
+            .then(function (response) {
+                $scope.handleComponents = response.data;
+            });
+    }
 });

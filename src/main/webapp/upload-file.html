@@ -38,8 +38,25 @@
       <br>
       <br>
 
+      <!-- This is handle multi find  -->
+      <div ng-show = "showFind">
+        Введите еще: <input ng-model="comstr" type="text" placeholder=" что найти ... (X;Y;R)">
+        <button ng-click="find()">Найти</button>
+        <br>
+        <br>
+      </div>
+
       <!--This div contain element by wait of parse photo -->
       <div ng-show="waitInfoShow">{{waitInfo}}</div>
+
+      <!-- This is result of handle search-->
+      <div ng-repeat="component in handleComponents">
+        <div>
+          {{component.name}} - {{component.type}}.
+          <br> {{component.description}}
+          <hr>
+        </div>
+      </div>
 
       <!-- This div contain parse result -->
       <div ng-repeat="component in components">
