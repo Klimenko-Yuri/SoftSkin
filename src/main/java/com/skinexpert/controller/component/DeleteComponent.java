@@ -19,7 +19,7 @@ import java.io.UnsupportedEncodingException;
 @WebServlet(urlPatterns = "/delete-component/*")
 public class DeleteComponent extends HttpServlet {
     private Logger logger;
-    private static final ComponentService componentService = ComponentService.getInstance();
+    private static final ComponentService COMPONENT_SERVICE = ComponentService.getInstance();
     private String message = "Компонент %s %s";
 
     @Override
@@ -43,19 +43,19 @@ public class DeleteComponent extends HttpServlet {
         try {
             int id = Integer.parseInt(deleteItem);
             logger.info(String.format("id param for removing is: %d", id));
-            Component component = componentService.deleteById(id);
+            Component component = COMPONENT_SERVICE.deleteById(id);
             responseMessageForDeleteRequest(resp, component.getName(), " удален");
         } catch (NumberFormatException e) {
             logger.error("Error while parsing deleteItem", e);
         }
 
         logger.info("Trying to remove component by its name");
-        Component component = componentService.findByName(deleteItem);
+        Component component = COMPONENT_SERVICE.findByName(deleteItem);
         if (component == null) {
             responseMessageForDeleteRequest(resp, "null", " не найден в базе");
         } else {
             component.setVisiable(false);
-            componentService.addComponent(component);
+            COMPONENT_SERVICE.saveOrUpdate(component);
             responseMessageForDeleteRequest(resp, component.getName(), " скрыт от поиска");
         }
     }

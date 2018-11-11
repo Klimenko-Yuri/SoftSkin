@@ -1,4 +1,4 @@
-package com.skinexpert.validation;
+package com.skinexpert.controller.component.validation;
 
 /**
  * If return null -> validation OK

@@ -1,28 +1,16 @@
 package com.skinexpert.service;
 
+import com.skinexpert.dao.ComponentDao;
+import com.skinexpert.dao.impl.HibernateComponentDaoImpl;
 import com.skinexpert.entity.Component;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
-/**
- * Created by Mihail Kolomiets on 09.08.18.
- */
 public class ComponentService {
-
-    @PersistenceContext(type = PersistenceContextType.EXTENDED)
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory("SoftSkin");
-    private EntityManager manager = factory.createEntityManager();
+    private ComponentDao componentDao;
 
     private ComponentService() {
+        this.componentDao = new HibernateComponentDaoImpl();
     }
 
     private static class ComponentServiceHolder {
@@ -33,83 +21,27 @@ public class ComponentService {
         return ComponentServiceHolder.INSTANCE;
     }
 
-    public Component addComponent(Component component) {
-        manager.getTransaction().begin();
-        component = manager.merge(component);
-        manager.getTransaction().commit();
-        return component;
-    }
-
-    public Component get(long id) {
-        Component component;
-
-        manager.getTransaction().begin();
-        component = manager.find(Component.class, id);
-        manager.getTransaction().commit();
-
-        return component;
-    }
-
-    public Component findByName(String name) {
-        Component component;
-
-        manager.getTransaction().begin();
-        Session session = (Session) manager.getDelegate();
-        Criteria criteria = session.createCriteria(Component.class);
-        criteria.add(Restrictions.eq("name", name));
-
-        try {
-            component = (Component) criteria.uniqueResult();
-        } catch (HibernateException he) {
-            System.out.println("no found" + name);
-            return null;
-        }
-
-        manager.getTransaction().commit();
-
-        return component;
-    }
-
-    public List<Component> getAll() {
-
-        List<Component> componentList;
-
-        manager.getTransaction().begin();
-        componentList = manager.createQuery("SELECT c from Component c").getResultList();
-        manager.getTransaction().commit();
-
-        return componentList;
-    }
-
-    public List<Component> findNameBySubstring(String search) {
-        List<Component> components;
-        search = search.toUpperCase();
-
-        manager.getTransaction().begin();
-        CriteriaBuilder builder = manager.getCriteriaBuilder();
-        CriteriaQuery<Component> query = builder.createQuery(Component.class);
-        Root<Component> componentRoot = query.from(Component.class);
-        query.select(componentRoot);
-        Predicate predicate = builder.like(builder.upper(componentRoot.get("name")),
-                "%" + search + "%");
-        query.where(predicate);
-        components = manager.createQuery(query).getResultList();
-        manager.getTransaction().commit();
-
-        return components;
+    public Component saveOrUpdate(Component component) {
+        return componentDao.saveOrUpdate(component);
     }
 
     public Component deleteById(long id) {
-
-        Component component;
-
-        manager.getTransaction().begin();
-        component = manager.find(Component.class, id);
-        manager.remove(component);
-        manager.getTransaction().commit();
-
-        return component;
+        return componentDao.deleteById(id);
     }
 
+    public Component findById(long id) {
+        return componentDao.findById(id);
+    }
 
+    public Component findByName(String name) {
+        return componentDao.findByName(name);
+    }
+
+    public List<Component> getAll() {
+        return componentDao.getAll();
+    }
+
+    public List<Component> findNameBySubstring(String search) {
+        return componentDao.findNameBySubstring(search);
+    }
 }

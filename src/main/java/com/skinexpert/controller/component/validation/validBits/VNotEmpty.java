@@ -1,4 +1,4 @@
-package com.skinexpert.validation.validBits;
+package com.skinexpert.controller.component.validation.validBits;
 
 import com.skinexpert.validation.Valid;
 

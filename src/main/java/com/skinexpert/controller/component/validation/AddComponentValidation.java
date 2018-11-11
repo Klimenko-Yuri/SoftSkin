@@ -1,10 +1,12 @@
-package com.skinexpert.validation;
+package com.skinexpert.controller.component.validation;
 
+import com.skinexpert.controller.component.validation.validBits.VCheckDigit;
+import com.skinexpert.controller.component.validation.validBits.VMostAny;
+import com.skinexpert.controller.component.validation.validBits.VNotEmpty;
 import com.skinexpert.entity.Component;
 import com.skinexpert.entity.TypeComponent;
-import com.skinexpert.validation.validBits.VCheckDigit;
-import com.skinexpert.validation.validBits.VMostAny;
-import com.skinexpert.validation.validBits.VNotEmpty;
+import com.skinexpert.validation.Valid;
+import com.skinexpert.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -48,7 +50,7 @@ public class AddComponentValidation {
         component.setId(VCheckDigit.getIntegerFromString(id));
         component.setName(name);
         component.setDescription(description);
-        component.setType(TypeComponent.getTypeByAtribute(type));
+        component.setType(TypeComponent.getTypeByAttribute(type));
 
         return validationResult;
     }

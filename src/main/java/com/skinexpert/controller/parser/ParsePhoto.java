@@ -2,8 +2,8 @@ package com.skinexpert.controller.parser;
 
 import com.google.gson.Gson;
 import com.skinexpert.entity.Component;
+import com.skinexpert.dao.impl.HibernateComponentDaoImpl;
 import com.skinexpert.service.ComponentService;
-import com.skinexpert.util.Property;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -29,7 +29,8 @@ import java.util.Set;
 @WebServlet(urlPatterns = "/parse")
 @MultipartConfig
 public class ParsePhoto extends HttpServlet {
-    private static ComponentService componentService = ComponentService.getInstance();
+    public static final String TESSERACT_LIB_PATH = "/home/kosmetika/";
+    private static ComponentService hibernateComponentDaoImpl = ComponentService.getInstance();
     private Logger logger;
 
     //10Mb
@@ -54,11 +55,11 @@ public class ParsePhoto extends HttpServlet {
         }
 
         ITesseract tesseract = new Tesseract();
-        tesseract.setDatapath(Property.TESSDATA);
+        tesseract.setDatapath(TESSERACT_LIB_PATH);
         tesseract.setLanguage("rus");
 
         String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
-        File targetFile = new File(Property.TESSDATA + "/tessdata/img/" + fileName);
+        File targetFile = new File(TESSERACT_LIB_PATH + "/tessdata/img/" + fileName);
 
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(filePart.getInputStream());
              BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(targetFile))) {
@@ -116,7 +117,7 @@ public class ParsePhoto extends HttpServlet {
      */
     private Set<Component> findInBase(String parseText) {
         HashSet<Component> result = new HashSet<>();
-        List<Component> all = componentService.getAll();
+        List<Component> all = hibernateComponentDaoImpl.getAll();
 
         String name;
         parseText = parseText.toUpperCase();

@@ -17,10 +17,10 @@ import java.util.List;
 /**
  * Created by Mihail 1Kolomiets on 15.08.18.
  */
-@WebServlet(urlPatterns = "/get-all-component")
+@WebServlet(urlPatterns = "/findById-all-component")
 public class GetAllComponents extends HttpServlet {
     private Logger logger;
-    private static final ComponentService componentService = ComponentService.getInstance();
+    private static final ComponentService COMPONENT_SERVICE = ComponentService.getInstance();
 
     @Override
     public void init() {
@@ -37,7 +37,7 @@ public class GetAllComponents extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        List<Component> componentList = componentService.getAll();
+        List<Component> componentList = COMPONENT_SERVICE.getAll();
 
         String outMessage = new Gson().toJson(componentList);
         try {

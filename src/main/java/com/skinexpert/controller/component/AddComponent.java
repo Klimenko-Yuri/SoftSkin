@@ -1,13 +1,12 @@
 package com.skinexpert.controller.component;
 
 import com.google.gson.Gson;
+import com.skinexpert.controller.component.validation.AddComponentValidation;
 import com.skinexpert.entity.Component;
 import com.skinexpert.service.ComponentService;
-import com.skinexpert.validation.AddComponentValidation;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 @WebServlet(urlPatterns = "/add-component")
 public class AddComponent extends HttpServlet {
     private Logger logger;
-    private static final ComponentService componentService = ComponentService.getInstance();
+    private static final ComponentService COMPONENT_SERVICE = ComponentService.getInstance();
 
     @Override
     public void init() {
@@ -62,11 +61,11 @@ public class AddComponent extends HttpServlet {
         StringBuilder action = new StringBuilder("Компонент ");
         action.append(component.getName());
 
-        if (component.getId() == 0 && componentService.findByName(component.getName()) != null) {
+        if (component.getId() == 0 && COMPONENT_SERVICE.findByName(component.getName()) != null) {
             action.append(" уже есть в базе");
             return action.toString();
         } else {
-            componentService.addComponent(component);
+            COMPONENT_SERVICE.saveOrUpdate(component);
             if (component.getId() == 0) {
                 action.append(" добавлен в базу");
                 return action.toString();

@@ -1,10 +1,6 @@
-package com.skinexpert.validation.validBits;
+package com.skinexpert.controller.component.validation.validBits;
 
-import com.skinexpert.entity.Component;
-import com.skinexpert.validation.AddComponentValidation;
 import com.skinexpert.validation.Valid;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Sample validation for Integer digit.
