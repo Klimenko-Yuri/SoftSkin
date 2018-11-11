@@ -36,7 +36,7 @@
 
     <h2 class="main-title">Загрузить фото</h2>
     <div ng-controller="parse" class="container">
-
+        {{ip}}
         <label>Выбрать файл</label>
         <input id="photo" type='file'/>
         <button ng-click="getParseResult()">Сканировать</button>
@@ -95,6 +95,7 @@
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/1.0.10/tesseract.min.js'></script>
   <script src="js/bundle.js" defer></script>
 <script src="js/photo-parser.js"></script>
 </body>

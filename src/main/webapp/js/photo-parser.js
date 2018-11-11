@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('pp', []);
-
+var Tesseract = require('tesseract.js');
 var host = "/skin-expert";
 
 
@@ -30,6 +30,12 @@ app.controller('parse', function ($scope, $http) {
         var params = new FormData;
         params.append('photo', f);
         $scope.dataview = "nothing to show";
+
+        Tesseract.recognize(f)
+            .then(function(result){
+                $scope.ip = result;
+            });
+
 
         $http.post(host + "/parse", params, config)
             .then(function (response) {
