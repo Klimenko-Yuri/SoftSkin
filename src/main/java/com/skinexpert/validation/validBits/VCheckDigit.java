@@ -20,7 +20,7 @@ public class VCheckDigit implements Valid {
 
     @Override
     public String check(Object o) {
-        if (o.equals("undefined") | !(o instanceof Integer))
+        if (o.equals("undefined") || !(o instanceof Integer))
             return message;
 
         return null;
