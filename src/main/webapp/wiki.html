@@ -1,74 +1,128 @@
-<!doctype html>
-<html lang="ru">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="css/style.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-  <link rel="stylesheet" href="css/all.min.css" type="text/css">
-  <link rel="stylesheet" href="css/style.css">
+  <title>Wiki</title>
 
   <link rel="icon" href="img/favicons/favicon.ico" type="image/x-icon" />
-  <link rel="icon" type="ia/png" href="img/favicons/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="ia/png" href="img/favicons/favicon-16x16.png" sizes="16x16" />
-  <link href='img/favicons/favicon-96x96.png' rel='shortcut icon' type='image/x-icon' />
-  <link href='img/favicons/favicon-96x96.png' rel='icon' type='image/x-icon' />
+  <link rel="icon" type="image/png" href="img/favicons/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="img/favicons/favicon-16x16.png" sizes="16x16" />
+  <link href='img/favicons/favicon-96x96.png' rel='shortcut icon' type='image/x-icon'/>
+  <link href='img/favicons/favicon-96x96.png' rel='icon' type='image/x-icon'/>
 
   <link rel="apple-touch-icon-precomposed" sizes="57x57" href="img/favicons/apple-icon-57x57.png" />
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/favicons/apple-icon-72x72.png" />
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/favicons/apple-icon-114x114.png" />
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/favicons/apple-icon-144x144.png" />
-  <title>Skin Expert</title>
-</head>
 
+  <!-- FONTS -->
+  <link href='https://fonts.googleapis.com/css?family=Bilbo+Swash+Caps' rel='stylesheet' type='text/css'>
+
+  <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,500,600,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Philosopher:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Bilbo+Swash+Caps' rel='stylesheet' type='text/css'>
+
+
+  <!--<link href="css/bootstrap.css" rel="stylesheet" type="text/css">-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link href="css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="css/styles.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
 <body>
-  <header class="header">
-    <div class="logo">
-      <a href="index.html">
-			<img src="img/logo.png" alt="" class="logo__link">
-		</a>
+<div class="page" id="top">
+  <!-- preloader-->
+  <!-- /preloader-->
+  <!-- -->
+  <!-- sticky menu -->
+  <header class='sticky-header js-stick top-fixed'>
+    <div class="container">
+      <nav class="main-nav">
+        <div class="full-wrapper align-center">
+          <!-- logo sticky -->
+          <div class="nav-logo-wrap-sticky">
+            <a href="index.html" class="logo">
+              <img src="img/logo.png" data-at2x="images/logo@2x.png" alt>
+            </a>
+          </div>
+          <!-- / logo sticky -->
+          <!-- menu mobile bars -->
+          <div class="mobile-nav">
+            <i class="fa fa-bars"></i>
+          </div>
+          <!-- / menu mobile bars -->
+          <div class="inner-nav desktop-nav">
+            <ul class="clearlist">
+              <!-- logo menu -->
+              <li class="nav-logo-wrap">
+                <a href="index.html" class="logo">
+                  <img src="img/logo.png" data-at2x="images/logo@2x.png" alt>
+                </a>
+              </li>
+              <!-- / logo menu -->
+            </ul>
+          </div>
+        </div>
+      </nav>
     </div>
   </header>
+  <!-- page section -->
+  <section class="page-section alt-color">
+    <aside class="widget-post">
 
-  <section class="section">
-    <h2 class="main-title">Полезные статьи</h2>
-    <div class="container">
-      <div class="articles">
-        <a href="#" class="articles__name">Danger - очень вредно</a>
-        <a href="#" class="articles__name">Middle - нормально</a>
-        <a href="#" class="articles__name">Good - положительные эффекты, стоящая вещь</a>
+      <h3 class="section-title bottom-line font-alt"><span>База знаний</span></h3>
+      <div class="widget-slider-2 nav-alt-1">
+        <div class="slider-item">
+
+          <article class="clearfix">
+            <div class="author">
+              <img src="img/wiki/img-3.jpg" alt>
+            </div>
+            <a href="wiki/wiki-1.html"><h4>Phasellus ullamcorper</h4></a>
+            <p>Tristique semper, magna nunc vestibulum purus</p>
+          </article>
+          <article class="clearfix">
+            <div class="author">
+              <img src="img/wiki/img-3.jpg" alt>
+            </div>
+            <a href="wiki/wiki-2.html"><h4>Aenean quis velit quis</h4></a>
+            <p>Tristique semper, magna nunc vestibulum purus</p>
+          </article>
+          <article class="clearfix">
+            <div class="author">
+              <img src="img/wiki/img-3.jpg" alt>
+            </div>
+            <a href="wiki/wiki-3.html"><h4>Praesent luctus diam</h4></a>
+            <p>Tristique semper, magna nunc vestibulum purus</p>
+          </article>
+          <article class="clearfix">
+            <div class="author">
+              <img src="img/wiki/img-3.jpg" alt>
+            </div>
+            <a href="wiki/wiki-4.html"><h4>Praesent luctus diam</h4></a>
+            <p>Tristique semper, magna nunc vestibulum purus</p>
+          </article>
+        </div>
+
       </div>
-    </div>
-
-
+    </aside>
   </section>
-
-
+  <!-- /page section -->
+  <!-- go home -->
   <div id="go-home">
     <a href="index.html">
       <i class="fas fa-home" style="padding-top: 9px;"></i>
     </a>
   </div>
-
-
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <p class="copiright">Copyright © 2018 SkinExpert. All rights reserved.</p>
-        <p class="policy">
-			<a href="about.html"><span>SkinExpert</span></a> |
-			<a href="privacy.html"><span>Privacy Policy</span></a>
-        </p>
-      </div>
-    </div>
-  </footer>
-
+  <!-- /go home -->
+</div>
 <!--
-  <script src="js/bundle.js" defer></script>
-  -->
-</body>
+<script src="js/jquery.min.js"></script>
 
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+ -->
+</body>
 </html>
