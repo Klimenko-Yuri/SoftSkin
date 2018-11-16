@@ -948,7 +948,7 @@ header .inner-nav .logo > a > img{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 65px 0 50px;
+    padding: 40px 0 50px;
     background-color: #ffffff;
 }
 .small-section{
@@ -4320,7 +4320,7 @@ ol.commentlist {
 aside{
     padding-bottom: 35px;
     margin: 0 auto 30px;
-    border-bottom: 4px solid ;
+    /*border-bottom: 4px solid ;*/
     max-width: 270px;
 }
 aside:last-child{
