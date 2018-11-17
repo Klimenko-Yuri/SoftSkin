@@ -5,8 +5,6 @@ import com.skinexpert.controller.component.validation.validBits.VMostAny;
 import com.skinexpert.controller.component.validation.validBits.VNotEmpty;
 import com.skinexpert.entity.Component;
 import com.skinexpert.entity.TypeComponent;
-import com.skinexpert.validation.Valid;
-import com.skinexpert.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

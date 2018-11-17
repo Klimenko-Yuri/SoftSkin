@@ -1,6 +1,6 @@
 package com.skinexpert.controller.component.validation.validBits;
 
-import com.skinexpert.validation.Valid;
+import com.skinexpert.controller.component.validation.Valid;
 
 /**
  * Check String by context
