@@ -24,6 +24,16 @@ public class Component {
     @Column(nullable = false)
     private boolean visiable;
 
+    public Component() {
+    }
+
+    public Component(String name, String description, TypeComponent type, boolean visiable) {
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.visiable = visiable;
+    }
+
     public TypeComponent getType() {
         return type;
     }
@@ -62,5 +72,27 @@ public class Component {
 
     public void setVisiable(boolean visiable) {
         this.visiable = visiable;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + (int) id;
+        hash = 31 * hash + (name == null ? 0 : name.hashCode());
+        hash = 31 * hash + (description == null ? 0 : description.hashCode());
+        hash = 31 * hash + (type == null ? 0 : type.hashCode());
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+        Component component = (Component) obj;
+        return id == component.id
+                && (name.equals(component.name)
+                && description.equals(component.description)
+                && type.getAttribute().equals(component.type.getAttribute()));
     }
 }
