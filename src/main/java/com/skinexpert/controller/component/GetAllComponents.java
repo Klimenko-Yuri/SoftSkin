@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by Mihail 1Kolomiets on 15.08.18.
  */
-@WebServlet(urlPatterns = "/findById-all-component")
+@WebServlet(urlPatterns = "/get-all-component")
 public class GetAllComponents extends HttpServlet {
     private Logger logger;
     private static final ComponentService COMPONENT_SERVICE = ComponentService.getInstance();
