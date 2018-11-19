@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.skinexpert.entity.Component;
 import com.skinexpert.service.ComponentService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,12 +19,15 @@ import java.util.stream.Collectors;
 
 
 @WebServlet(urlPatterns = "/get-list-of-component/*")
-public class FindLissOfComponents extends HttpServlet{
+public class FindListOfComponents extends HttpServlet{
+
+    private Logger logger;
+    private static final ComponentService COMPONENT_SERVICE = ComponentService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json; charset = utf8");
         req.setCharacterEncoding("utf8");
-        ComponentService service = new  ComponentService();
 
         List<String> requestString = Arrays.asList(req.getParameter("list").split(";"));
 
@@ -31,7 +35,7 @@ public class FindLissOfComponents extends HttpServlet{
         if(requestString.size()==0){
             outMessage = "['error' : 'Format is incorrect']";
         } else {
-            outMessage = new Gson().toJson(service.getListOfComponents(requestString));
+            outMessage = new Gson().toJson(COMPONENT_SERVICE.getListOfComponents(requestString));
         }
         resp.getWriter().write(outMessage);
 

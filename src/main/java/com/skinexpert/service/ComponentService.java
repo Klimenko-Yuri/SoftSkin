@@ -44,4 +44,8 @@ public class ComponentService {
     public List<Component> findNameBySubstring(String search) {
         return componentDao.findNameBySubstring(search);
     }
+
+    public List<Component> getListOfComponents(List requestString) {
+        return componentDao.getListOfComponents(requestString);
+    }
 }
