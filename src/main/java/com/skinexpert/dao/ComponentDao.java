@@ -17,5 +17,5 @@ public interface ComponentDao {
 
     List<Component> findNameBySubstring(String search);
 
-    List<Component> getListOfComponents(List requestString);
+    List<Component> getListOfComponents(List<String> stringList);
 }

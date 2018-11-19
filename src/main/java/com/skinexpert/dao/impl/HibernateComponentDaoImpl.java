@@ -99,11 +99,10 @@ public class HibernateComponentDaoImpl implements ComponentDao {
         return manager.createQuery(query).getResultList();
     }
 
-    public List<Component> getListOfComponents(List requestString) {
+    public List<Component> getListOfComponents(List<String> stringList) {
         Session session = (Session) manager.getDelegate();
         Criteria criteria = session.createCriteria(Component.class);
-        List<Component> name = criteria.add(Restrictions.in("name", requestString)).list();
-        return name;
+        return criteria.add(Restrictions.in("name", stringList)).list();
     }
 
 
