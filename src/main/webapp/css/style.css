@@ -1,0 +1,136 @@
+a:link { color: grey; }
+a:visited { color: grey; }
+a:hover { color: grey; }
+a:active { color: grey; }
+
+
+body {
+    font-size: 14px;
+    font-family: 'Source Sans Pro', sans-serif;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* #scroll-top { */
+#go-home {
+    position: fixed;
+    z-index: 100;
+    bottom: 30px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    /* background-color: #ebe6d2; */
+    background-color: #3DC7F4;
+
+    text-transform: uppercase;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    transition: all 0.3s;
+    -webkit-box-shadow: 0 0 0 1px #fff inset, 0 0 0 3px #ebe6d2;
+    -moz-box-shadow: 0 0 0 1px #fff inset, 0 0 0 3px #ebe6d2;
+    box-shadow: 0 0 0 1px #fff inset, 0 0 0 3px #ebe6d2;
+}
+/* #scroll-top > *{ */
+#go-home > *{
+    display: block;
+}
+#go-home > i{
+    margin-top: 5px;
+}
+#go-home:hover{
+    -webkit-box-shadow: 0 0 0 20px #fff inset, 0 0 0 3px #ebe6d2;
+    -moz-box-shadow: 0 0 0 20px #fff inset, 0 0 0 3px #ebe6d2;
+    box-shadow: 0 0 0 20px #fff inset, 0 0 0 3px #ebe6d2;
+}
+
+#go-back {
+    position: fixed;
+    z-index: 100;
+    bottom: 30px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    /* background-color: #ebe6d2; */
+    background-color: #76c08a;
+
+    text-transform: uppercase;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    transition: all 0.3s;
+    -webkit-box-shadow: 0 0 0 1px #fff inset, 0 0 0 3px #ebe6d2;
+    -moz-box-shadow: 0 0 0 1px #fff inset, 0 0 0 3px #ebe6d2;
+    box-shadow: 0 0 0 1px #fff inset, 0 0 0 3px #ebe6d2;
+}
+
+
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("../font/Flaticon.eot");
+  src: url("../font/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("../font/Flaticon.woff") format("woff"),
+       url("../font/Flaticon.ttf") format("truetype"),
+       url("../font/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-family: Flaticon;
+        font-size: inherit;
+font-style: normal;
+display: inline-block;
+}
+
+.flaticon-arrows:before { content: "\f100"; }
+.flaticon-arrows-1:before { content: "\f101"; }
+.flaticon-arrows-2:before { content: "\f102"; }
+.flaticon-arrows-3:before { content: "\f103"; }
+.flaticon-connection:before { content: "\f104"; }
+.flaticon-food:before { content: "\f105"; }
+.flaticon-geometric:before { content: "\f106"; }
+.flaticon-icon-32195:before { content: "\f107"; }
+.flaticon-icon-32323:before { content: "\f108"; }
+.flaticon-icon-70429:before { content: "\f109"; }
+.flaticon-link:before { content: "\f10a"; }
+.flaticon-mark:before { content: "\f10b"; }
+.flaticon-nature:before { content: "\f10c"; }
+.flaticon-search:before { content: "\f10d"; }
+.flaticon-signs:before { content: "\f10e"; }
+.flaticon-social:before { content: "\f10f"; }
+.flaticon-social-1:before { content: "\f110"; }
+.flaticon-social-2:before { content: "\f111"; }
+.flaticon-social-3:before { content: "\f112"; }
+.flaticon-social-4:before { content: "\f113"; }
+.flaticon-social-5:before { content: "\f114"; }
+.flaticon-squares:before { content: "\f115"; }
+.flaticon-squares-1:before { content: "\f116"; }
+.flaticon-squares-2:before { content: "\f117"; }
+.flaticon-stack:before { content: "\f118"; }
+.flaticon-text:before { content: "\f119"; }
+.flaticon-tool:before { content: "\f11a"; }
+.flaticon-tool-1:before { content: "\f11b"; }
