@@ -80,7 +80,8 @@ public class ParsePhoto extends HttpServlet {
                     String parseResult = "";
 
                     try {
-                        bufferedOutputStream.write(bufferedInputStream.read());
+                        byte[] buffer = new byte[fileSize];
+                        bufferedOutputStream.write(bufferedInputStream.read(buffer));
                         parseResult = tesseract.doOCR(targetFile);
                     } catch (TesseractException e) {
                         logger.error("Tesseract library exception", e);
