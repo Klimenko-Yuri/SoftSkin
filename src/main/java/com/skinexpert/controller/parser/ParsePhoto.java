@@ -29,7 +29,7 @@ import java.util.Set;
 @WebServlet(urlPatterns = "/parse")
 @MultipartConfig
 public class ParsePhoto extends HttpServlet {
-    public static final String TESSERACT_LIB_PATH = "/home/kosmetika/";
+    public static final String TESSERACT_LIB_PATH = "/home/kosmetika";
     private static ComponentService hibernateComponentDaoImpl = ComponentService.getInstance();
     private Logger logger;
 
@@ -61,44 +61,44 @@ public class ParsePhoto extends HttpServlet {
         String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
         File targetFile = new File(TESSERACT_LIB_PATH + "/tessdata/img/" + fileName);
 
-        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(filePart.getInputStream());
-             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(targetFile))) {
+        if (!targetFile.exists()) {
+            try (BufferedInputStream bufferedInputStream = new BufferedInputStream(filePart.getInputStream());
+                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(targetFile))) {
 
-            int fileSize = bufferedInputStream.available();
-            logger.debug("File size: " + fileSize);
+                int fileSize = bufferedInputStream.available();
+                logger.debug("File size: " + fileSize);
 
-            // mini validation // todo with validator
-            if (fileSize > FILE_MAX_SIZE) {
-                outMessage = new Gson().toJson("file so big");
-            } else if (fileSize == 0) {
-                outMessage = new Gson().toJson("where file issue?");
-            } else if (fileName.length() == 0) {
-                outMessage = new Gson().toJson("it's realy file without name?");
-            } else {
-                if (!targetFile.exists()) {
-                    bufferedOutputStream.write(bufferedInputStream.read());
+                // mini validation // todo with validator
+                if (fileSize > FILE_MAX_SIZE) {
+                    outMessage = new Gson().toJson("file so big");
+                } else if (fileSize == 0) {
+                    outMessage = new Gson().toJson("where file issue?");
+                } else if (fileName.length() == 0) {
+                    outMessage = new Gson().toJson("it's realy file without name?");
                 } else {
-                    System.out.println("file is exist");
+
+                    String parseResult = "";
+
+                    try {
+                        bufferedOutputStream.write(bufferedInputStream.read());
+                        parseResult = tesseract.doOCR(targetFile);
+                    } catch (TesseractException e) {
+                        logger.error("Tesseract library exception", e);
+                    } finally {
+                        targetFile.delete();
+                    }
+
+                    logger.debug("Parse result " + parseResult);
+
+                    Set<Component> contain = findInBase(parseResult);
+                    outMessage = new Gson().toJson(contain);
                 }
-
-                String parseResult = "";
-
-                try {
-                    parseResult = tesseract.doOCR(targetFile);
-                } catch (TesseractException e) {
-                    logger.error("Tesseract library exception", e);
-                } finally {
-                    targetFile.delete();
-                }
-
-                logger.debug("Parse result " + parseResult);
-
-                Set<Component> contain = findInBase(parseResult);
-                outMessage = new Gson().toJson(contain);
+                resp.getWriter().write(outMessage);
+            } catch (IOException e) {
+                logger.error("Exception while file reading", e);
             }
-            resp.getWriter().write(outMessage);
-        } catch (IOException e) {
-            logger.error("Exception while file reading", e);
+        } else {
+            System.out.println("file is exist");
         }
     }
 
