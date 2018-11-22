@@ -6,6 +6,8 @@
     <persistence-unit name="SoftSkin" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.skinexpert.entity.Component</class>
+        <class>com.skinexpert.entity.Product</class>
+        <class>com.skinexpert.entity.TypeProduct</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
