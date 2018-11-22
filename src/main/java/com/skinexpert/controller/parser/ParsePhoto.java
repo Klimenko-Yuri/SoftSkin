@@ -34,7 +34,7 @@ public class ParsePhoto extends HttpServlet {
     private Logger logger;
 
     //10Mb
-    private final Integer FILEMAXSIZE = 10000000;
+    private final Integer FILE_MAX_SIZE = 10_048_576;
     private String outMessage;
 
     @Override
@@ -68,7 +68,7 @@ public class ParsePhoto extends HttpServlet {
             logger.debug("File size: " + fileSize);
 
             // mini validation // todo with validator
-            if (fileSize > FILEMAXSIZE) {
+            if (fileSize > FILE_MAX_SIZE) {
                 outMessage = new Gson().toJson("file so big");
             } else if (fileSize == 0) {
                 outMessage = new Gson().toJson("where file issue?");
