@@ -57,7 +57,7 @@
             <version>2.7</version>
         </dependency>
 
-        <!--     parse text from image
+        <!--     parse text from image test
         https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
         <dependency>
             <groupId>net.sourceforge.tess4j</groupId>
