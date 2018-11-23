@@ -56,6 +56,19 @@
                 {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
               </div>
             </div>
+            <div ng-if="c.type == 'G'">
+              <div class="alert alert-success" role="alert">
+                {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
+              </div>
+            </div>
+            <div ng-if="c.type == 'G'">
+              <div class="alert alert-warning" role="alert">
+                {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
+              </div>
+            </div>
+
+
+
             {{c.type}} компонент {{c.name}} <br> Описание: {{c.description}}
           </div>
         </div>
