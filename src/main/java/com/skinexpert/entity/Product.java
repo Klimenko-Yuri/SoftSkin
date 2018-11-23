@@ -17,10 +17,10 @@ public class Product {
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idProduct")
     private List<Component> componentList;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idProduct")
     private TypeProduct typeProduct;
 
     public Product() {

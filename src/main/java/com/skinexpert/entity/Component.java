@@ -17,6 +17,9 @@ public class Component {
     private String name;
 
     @Column
+    private String nameENG;
+
+    @Column
     private String description;
 
     @Column
@@ -37,6 +40,14 @@ public class Component {
         this.description = description;
         this.type = type;
         this.visiable = visiable;
+    }
+
+    public String getNameENG() {
+        return nameENG;
+    }
+
+    public void setNameENG(String nameENG) {
+        this.nameENG = nameENG;
     }
 
     public TypeComponent getType() {
@@ -84,6 +95,7 @@ public class Component {
         int hash = 7;
         hash = 31 * hash + (int) id;
         hash = 31 * hash + (name == null ? 0 : name.hashCode());
+        hash = 31 * hash + (nameENG == null ? 0 : nameENG.hashCode());
         hash = 31 * hash + (description == null ? 0 : description.hashCode());
         hash = 31 * hash + (type == null ? 0 : type.hashCode());
         return hash;
