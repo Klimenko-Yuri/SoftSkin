@@ -72,6 +72,10 @@ public class HibernateComponentDaoImpl implements ComponentDao {
             Session session = (Session) manager.getDelegate();
             Criteria criteria = session.createCriteria(Component.class);
             criteria.add(Restrictions.eq("name", name));
+
+            //Add new restriction for finding by name in English
+            criteria.add(Restrictions.or(Restrictions.eq("nameENG", name)));
+
             return (Component) criteria.uniqueResult();
         } catch (RuntimeException e) {
             logger.error("Exception during find by name request", e);

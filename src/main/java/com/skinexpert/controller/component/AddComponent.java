@@ -43,6 +43,7 @@ public class AddComponent extends HttpServlet {
         String addResult = new AddComponentValidation().checkRequestData(req, component);
 
         component.setVisiable(true);
+        System.out.println(component.getNameENG());
 
         if (addResult == null) {
             addResult = addComponent(component);

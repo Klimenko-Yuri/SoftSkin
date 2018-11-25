@@ -27,6 +27,7 @@ app.controller('clicker', function ($scope, $http) {
                     $scope.components = components;
                     $scope.id = components[0].id;
                     $scope.name = components[0].name;
+                    $scope.nameENG = components[0].nameENG;
                     $scope.description = components[0].description;
                     $scope.type = components[0].type;
                     $scope.show = true; //this for angular ng-show
@@ -44,6 +45,7 @@ app.controller('clicker', function ($scope, $http) {
             name: $scope.name,
             description: $scope.description,
             type: $scope.type,
+            nameENG: $scope.nameENG,
             id: $scope.id + ''
         };
 

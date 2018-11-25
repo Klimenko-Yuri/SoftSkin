@@ -20,6 +20,7 @@
             <property name="hibernate.connection.useUnicode" value="true"/>
             <property name="show_sql" value="true"/>
             <property name="format_sql" value="true"/>
+            <property name="hibernate.id.new_generator_mappings" value="false"/>
 
         </properties>
     </persistence-unit>
