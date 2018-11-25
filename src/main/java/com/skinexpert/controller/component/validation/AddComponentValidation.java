@@ -38,6 +38,7 @@ public class AddComponentValidation {
         String description = params.get("description");
         String type = params.get("type");
         String id = params.get("id");
+        String engName = params.get("nameENG");
 
         LinkedList<Valid> validationBits = new LinkedList<>();
         validationBits.add(new VNotEmpty("Поле юзера пустое."));
@@ -49,6 +50,7 @@ public class AddComponentValidation {
         component.setName(name);
         component.setDescription(description);
         component.setType(TypeComponent.getTypeByAttribute(type));
+        component.setNameENG(engName);
 
         return validationResult;
     }
