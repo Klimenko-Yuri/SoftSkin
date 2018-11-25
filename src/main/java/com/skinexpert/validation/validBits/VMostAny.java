@@ -1,6 +1,6 @@
-package com.skinexpert.controller.component.validation.validBits;
+package com.skinexpert.validation.validBits;
 
-import com.skinexpert.controller.component.validation.Valid;
+import com.skinexpert.validation.Valid;
 
 /**
  * Check string on length

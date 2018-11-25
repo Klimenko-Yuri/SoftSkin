@@ -1,10 +1,10 @@
-package com.skinexpert.controller.component.validation;
+package com.skinexpert.validation;
 
-import com.skinexpert.controller.component.validation.validBits.VCheckDigit;
-import com.skinexpert.controller.component.validation.validBits.VMostAny;
-import com.skinexpert.controller.component.validation.validBits.VNotEmpty;
 import com.skinexpert.entity.Component;
 import com.skinexpert.entity.TypeComponent;
+import com.skinexpert.validation.validBits.VCheckDigit;
+import com.skinexpert.validation.validBits.VMostAny;
+import com.skinexpert.validation.validBits.VNotEmpty;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class AddComponentValidation {
         String description = params.get("description");
         String type = params.get("type");
         String id = params.get("id");
-        String engName = params.get("nameENG");
+        String nameEng = params.get("nameENG");
 
         LinkedList<Valid> validationBits = new LinkedList<>();
         validationBits.add(new VNotEmpty("Поле юзера пустое."));
@@ -49,8 +49,8 @@ public class AddComponentValidation {
         component.setId(VCheckDigit.getIntegerFromString(id));
         component.setName(name);
         component.setDescription(description);
-        component.setType(TypeComponent.getTypeByAttribute(type));
-        component.setNameENG(engName);
+        component.setType(TypeComponent.getTypeByAtribute(type));
+        component.setNameENG(nameEng);
 
         return validationResult;
     }

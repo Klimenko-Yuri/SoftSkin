@@ -51,25 +51,22 @@
             <th scope="col">{{msg}}</th>
           </div>
           <div ng-repeat="c in components"> <!-- it response of searche-->
-            <div ng-if="c.type == 'D'">
-              <div class="alert alert-danger" role="alert">
+
+              <div ng-if="c.type == 'DANGER'" class="alert alert-danger" role="alert">
+                {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
+              </div>
+
+            <div>
+              <div ng-if="c.type == 'GOOD'" class="alert alert-success" role="alert">
                 {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
               </div>
             </div>
-            <div ng-if="c.type == 'G'">
-              <div class="alert alert-success" role="alert">
-                {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
-              </div>
-            </div>
-            <div ng-if="c.type == 'G'">
+            <div ng-if="c.type == 'MIDDLE'">
               <div class="alert alert-warning" role="alert">
                 {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
               </div>
             </div>
 
-
-
-            {{c.type}} компонент {{c.name}} <br> Описание: {{c.description}}
           </div>
         </div>
       </div>

@@ -1,6 +1,10 @@
-package com.skinexpert.controller.component.validation.validBits;
+package com.skinexpert.validation.validBits;
 
-import com.skinexpert.controller.component.validation.Valid;
+import com.skinexpert.entity.Component;
+import com.skinexpert.validation.AddComponentValidation;
+import com.skinexpert.validation.Valid;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Sample validation for Integer digit.
@@ -16,7 +20,7 @@ public class VCheckDigit implements Valid {
 
     @Override
     public String check(Object o) {
-        if (o.equals("undefined") || !(o instanceof Integer))
+        if (o.equals("undefined") | !(o instanceof Integer))
             return message;
 
         return null;

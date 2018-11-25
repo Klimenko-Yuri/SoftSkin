@@ -8,23 +8,23 @@ public enum TypeComponent {
     MIDDLE("M"),
     GOOD("G");
 
-    private String attribute;
+    private String atribute;
 
-    TypeComponent(String attribute) {
-        this.attribute = attribute;
+    TypeComponent(String atribute) {
+        this.atribute = atribute;
     }
 
-    public String getAttribute() {
-        return attribute;
+    public String getAtribute() {
+        return atribute;
     }
 
-    public static TypeComponent getTypeByAttribute(String type) {
+    public static TypeComponent getTypeByAtribute(String type) {
         if (type == null) {
             return MIDDLE;
         }
         type = type.toUpperCase();
         for (TypeComponent typeComponent : TypeComponent.values()) {
-            if (typeComponent.getAttribute().equals(type))
+            if (typeComponent.getAtribute().equals(type))
                 return typeComponent;
         }
         return MIDDLE;

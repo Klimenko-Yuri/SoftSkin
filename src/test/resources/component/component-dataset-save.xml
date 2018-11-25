@@ -1,8 +1,0 @@
-<dataset>
-    <component id="1" name="water" description="some description about" type="2" visiable="true"/>
-    <component id="2" name="absent" description="some description about" type="1" visiable="true"/>
-    <component id="3" name="vodka" description="some description about" type="0" visiable="true"/>
-    <component id="4" name="martini" description="some description about" type="1" visiable="true"/>
-    <component id="5" name="wine" description="some description about" type="2" visiable="true"/>
-    <component id="6" name="cognac" description="useful with lemon" type="1" visiable="true"/>
-</dataset>
