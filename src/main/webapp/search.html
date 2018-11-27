@@ -46,30 +46,37 @@
               <button ng-click="find()" class="btn search__btn">Найти</button>
             </div>
           </form>
-
+          <p>
           <div> <!--its response if some bad -->
             <th scope="col">{{msg}}</th>
           </div>
+          </p>
+
           <div ng-repeat="c in components"> <!-- it response of searche-->
-            <div ng-if="c.type == 'D'">
+            <!-- ngIf: c.type == 'DANGER' -->
+            <div ng-if="c.type == 'DANGER'">
               <div class="alert alert-danger" role="alert">
-                {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
+                <strong>{{c.name}}</strong><span class="badge badge-light float-right">{{c.type}}</span><br>
+                <small class="ng-binding text-monospace">Описание: {{c.description}}</small>
               </div>
             </div>
-            <div ng-if="c.type == 'G'">
-              <div class="alert alert-success" role="alert">
-                {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
-              </div>
-            </div>
-            <div ng-if="c.type == 'G'">
+            <!-- end ngIf: c.type == 'DANGER' -->
+            <!-- ngIf: c.type == 'MIDDLE' -->
+            <div ng-if="c.type == 'MIDDLE'">
               <div class="alert alert-warning" role="alert">
-                {{c.type}} <strong>компонент {{c.name}}</strong>  <br> <small>Описание: {{c.description}}</small>
+                <strong>{{c.name}}</strong><span class="badge badge-light float-right">{{c.type}}</span><br>
+                <small class="ng-binding text-monospace">Описание: {{c.description}}</small>
               </div>
             </div>
-
-
-
-            {{c.type}} компонент {{c.name}} <br> Описание: {{c.description}}
+            <!-- end ngIf: c.type == 'MIDDLE' -->
+            <!-- ngIf: c.type == 'GOOD' -->
+            <div ng-if="c.type == 'GOOD'">
+              <div class="alert alert-success" role="alert">
+                <strong>{{c.name}}</strong><span class="badge badge-light float-right">{{c.type}}</span><br>
+                <small class="ng-binding text-monospace">Описание: {{c.description}}</small>
+              </div>
+            </div>
+            <!-- end ngIf: c.type == 'GOOD' -->
           </div>
         </div>
       </div>
