@@ -19,9 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * Created by Mihail Kolomiets on 8/24/18.
@@ -32,6 +31,9 @@ public class ParsePhoto extends HttpServlet {
     public static final String TESSERACT_LIB_PATH = "/home/kosmetika";
     private static ComponentService hibernateComponentDaoImpl = ComponentService.getInstance();
     private Logger logger;
+
+    //Divide threads during recognizing
+    private static final ExecutorService workers = Executors.newCachedThreadPool();
 
     //10Mb
     private final Integer FILE_MAX_SIZE = 10_048_576;
@@ -54,12 +56,21 @@ public class ParsePhoto extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        ITesseract tesseract = new Tesseract();
-        tesseract.setDatapath(TESSERACT_LIB_PATH);
-        tesseract.setLanguage("rus");
+        //recognizing Russian text
+        ITesseract tesseractRUS = new Tesseract();
+        tesseractRUS.setDatapath(TESSERACT_LIB_PATH);
+        tesseractRUS.setLanguage("rus");
+        //recognizing English text
+        ITesseract tesseractENG = new Tesseract();
+        tesseractENG.setDatapath(TESSERACT_LIB_PATH);
+        tesseractENG.setLanguage("eng");
 
         String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
         File targetFile = new File(TESSERACT_LIB_PATH + "/tessdata/img/" + fileName);
+
+        String parseResultRUS = "";
+        String parseResultEND = "";
+
 
         if (!targetFile.exists()) {
             try (BufferedInputStream bufferedInputStream = new BufferedInputStream(filePart.getInputStream());
@@ -77,22 +88,20 @@ public class ParsePhoto extends HttpServlet {
                     outMessage = new Gson().toJson("it's realy file without name?");
                 } else {
 
-                    String parseResult = "";
+                    byte[] buffer = new byte[fileSize];
+                    bufferedInputStream.read(buffer);
+                    bufferedOutputStream.write(buffer);
 
-                    try {
-                        byte[] buffer = new byte[fileSize];
-                        bufferedInputStream.read(buffer);
-                        bufferedOutputStream.write(buffer);
-                        parseResult = tesseract.doOCR(targetFile);
-                    } catch (TesseractException e) {
-                        logger.error("Tesseract library exception", e);
-                    } finally {
-                        targetFile.delete();
-                    }
+                    Set<Component> contain = new HashSet<>();
+                    //save recornized text
+                    List<String> listRecognize = recognizeTest(targetFile, tesseractRUS, tesseractENG);
 
-                    logger.debug("Parse result " + parseResult);
+                    listRecognize.stream().parallel().forEach(string->{
+                        contain.addAll(findInBase(string));
+                    });
+                    logger.debug("Parse result " + parseResultRUS);
 
-                    Set<Component> contain = findInBase(parseResult);
+
                     outMessage = new Gson().toJson(contain);
                 }
                 resp.getWriter().write(outMessage);
@@ -122,13 +131,14 @@ public class ParsePhoto extends HttpServlet {
         List<Component> all = hibernateComponentDaoImpl.getAll();
 
         String name;
+        String nameENG;
         parseText = parseText.toUpperCase();
 
         for (int textPosition = 0; textPosition < parseText.length(); textPosition++) {
 
             for (Component component : all) {
-                name = component.getName();
-                name = name.toUpperCase();
+                name = component.getName().toUpperCase();
+                nameENG = component.getNameENG().toUpperCase();
 
                 if (name.length() <= parseText.length() - textPosition
                         && name.charAt(0) == parseText.charAt(textPosition)             //now find begin
@@ -137,9 +147,53 @@ public class ParsePhoto extends HttpServlet {
                     result.add(component);
                     textPosition += name.length();
                 }
+
+                if (nameENG.length() <= parseText.length() - textPosition
+                        && nameENG.charAt(0) == parseText.charAt(textPosition)             //now find begin
+                        & nameENG.equals(parseText.substring(textPosition, textPosition + nameENG.length()))) {
+
+                    result.add(component);
+                    textPosition += nameENG.length();
+                }
             }
         }
 
         return result;
+    }
+
+
+    private List<String> recognizeTest(File targetFile, ITesseract ... languages)
+    {
+        //save recornized text
+        List<String> listRecognize = new ArrayList<>();
+
+        try {
+            Collection<Callable<String>> tasks = new ArrayList<>();
+
+            for (ITesseract t:languages) {
+                tasks.add(new Callable<String>() {
+                    public String call()
+                            throws TesseractException {
+                        return t.doOCR(targetFile);
+                    }
+                });
+            }
+            languages[0].doOCR(targetFile);
+
+            List<Future<String>> results = workers.invokeAll(tasks);
+
+            for (Future<String> f : results) {
+                listRecognize.add(f.get());
+            }
+        } catch (TesseractException e) {
+            logger.error("Tesseract library exception", e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } finally {
+            targetFile.delete();
+        }
+        return listRecognize;
     }
 }
