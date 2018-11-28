@@ -26,6 +26,7 @@ public class Component {
     private TypeComponent type;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idComponent")
     private List<Product> productList;
 
 
@@ -40,6 +41,14 @@ public class Component {
         this.description = description;
         this.type = type;
         this.visiable = visiable;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     public String getNameENG() {
