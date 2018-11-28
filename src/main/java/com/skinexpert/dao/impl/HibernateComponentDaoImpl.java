@@ -9,10 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 /**
@@ -97,8 +94,12 @@ public class HibernateComponentDaoImpl implements ComponentDao {
         CriteriaQuery<Component> query = builder.createQuery(Component.class);
         Root<Component> componentRoot = query.from(Component.class);
         query.select(componentRoot);
-        Predicate predicate = builder.like(builder.upper(componentRoot.get("name")),
+
+        Predicate predicateRUS = builder.like(builder.upper(componentRoot.get("name")),
                 "%" + search.toUpperCase() + "%");
+        Predicate predicateENG = builder.like(builder.upper(componentRoot.get("nameENG")),
+                "%" + search.toUpperCase() + "%");
+        Predicate predicate = builder.or(predicateRUS,predicateENG);
         query.where(predicate);
         return manager.createQuery(query).getResultList();
     }
