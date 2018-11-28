@@ -38,7 +38,7 @@ app.controller('parse', function ($scope, $http) {
                     $scope.waitInfoShow = false;
                 }
                 else {
-                    $scope.waitInfo = "Не распарсило ничего интересного"
+                    $scope.waitInfo = "Не распозналось ничего интересного"
                 }
                 $scope.showFind = true;
             });

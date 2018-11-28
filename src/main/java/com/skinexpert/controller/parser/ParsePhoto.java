@@ -2,7 +2,6 @@ package com.skinexpert.controller.parser;
 
 import com.google.gson.Gson;
 import com.skinexpert.entity.Component;
-import com.skinexpert.dao.impl.HibernateComponentDaoImpl;
 import com.skinexpert.service.ComponentService;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
@@ -22,13 +21,10 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.*;
 
-/**
- * Created by Mihail Kolomiets on 8/24/18.
- */
 @WebServlet(urlPatterns = "/parse")
 @MultipartConfig
 public class ParsePhoto extends HttpServlet {
-    public static final String TESSERACT_LIB_PATH = "/home/kosmetika";
+    public static final String TESSERACT_LIB_PATH = "/home/mihail";
     private static ComponentService hibernateComponentDaoImpl = ComponentService.getInstance();
     private Logger logger;
 
@@ -68,10 +64,6 @@ public class ParsePhoto extends HttpServlet {
         String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
         File targetFile = new File(TESSERACT_LIB_PATH + "/tessdata/img/" + fileName);
 
-        String parseResultRUS = "";
-        String parseResultEND = "";
-
-
         if (!targetFile.exists()) {
             try (BufferedInputStream bufferedInputStream = new BufferedInputStream(filePart.getInputStream());
                  BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(targetFile))) {
@@ -93,13 +85,13 @@ public class ParsePhoto extends HttpServlet {
                     bufferedOutputStream.write(buffer);
 
                     Set<Component> contain = new HashSet<>();
-                    //save recornized text
+                    //save recognized text
                     List<String> listRecognize = recognizeTest(targetFile, tesseractRUS, tesseractENG);
 
-                    listRecognize.stream().parallel().forEach(string->{
+                    listRecognize.stream().parallel().forEach(string -> {
                         contain.addAll(findInBase(string));
                     });
-                    logger.debug("Parse result " + parseResultRUS);
+                    //logger.debug("Parse result " + parseResultRUS);
 
 
                     outMessage = new Gson().toJson(contain);
@@ -138,7 +130,14 @@ public class ParsePhoto extends HttpServlet {
 
             for (Component component : all) {
                 name = component.getName().toUpperCase();
-                nameENG = component.getNameENG().toUpperCase();
+                nameENG = component.getNameENG();
+
+                if (nameENG == null) {
+                    nameENG = "";
+                } else {
+                    nameENG = nameENG.toUpperCase();
+                }
+
 
                 if (name.length() <= parseText.length() - textPosition
                         && name.charAt(0) == parseText.charAt(textPosition)             //now find begin
@@ -149,6 +148,7 @@ public class ParsePhoto extends HttpServlet {
                 }
 
                 if (nameENG.length() <= parseText.length() - textPosition
+                        && nameENG.length() > 0
                         && nameENG.charAt(0) == parseText.charAt(textPosition)             //now find begin
                         & nameENG.equals(parseText.substring(textPosition, textPosition + nameENG.length()))) {
 
@@ -162,31 +162,28 @@ public class ParsePhoto extends HttpServlet {
     }
 
 
-    private List<String> recognizeTest(File targetFile, ITesseract ... languages)
-    {
+    private List<String> recognizeTest(File targetFile, ITesseract... languages) {
         //save recornized text
         List<String> listRecognize = new ArrayList<>();
 
         try {
             Collection<Callable<String>> tasks = new ArrayList<>();
 
-            for (ITesseract t:languages) {
+            for (ITesseract t : languages) {
                 tasks.add(new Callable<String>() {
-                    public String call()
-                            throws TesseractException {
+                    public String call() throws TesseractException {
                         return t.doOCR(targetFile);
                     }
                 });
             }
-            languages[0].doOCR(targetFile);
 
             List<Future<String>> results = workers.invokeAll(tasks);
 
             for (Future<String> f : results) {
                 listRecognize.add(f.get());
             }
-        } catch (TesseractException e) {
-            logger.error("Tesseract library exception", e);
+        //} catch (TesseractException e) {
+          //  logger.error("Tesseract library exception", e);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
