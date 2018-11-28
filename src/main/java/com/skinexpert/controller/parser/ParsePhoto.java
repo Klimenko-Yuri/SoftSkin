@@ -2,7 +2,6 @@ package com.skinexpert.controller.parser;
 
 import com.google.gson.Gson;
 import com.skinexpert.entity.Component;
-import com.skinexpert.dao.impl.HibernateComponentDaoImpl;
 import com.skinexpert.service.ComponentService;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
@@ -19,19 +18,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.concurrent.*;
 
-/**
- * Created by Mihail Kolomiets on 8/24/18.
- */
 @WebServlet(urlPatterns = "/parse")
 @MultipartConfig
 public class ParsePhoto extends HttpServlet {
-    public static final String TESSERACT_LIB_PATH = "/home/kosmetika";
+    public static final String TESSERACT_LIB_PATH = "/home/mihail";
     private static ComponentService hibernateComponentDaoImpl = ComponentService.getInstance();
     private Logger logger;
+
+    //Divide threads during recognizing
+    private static final ExecutorService workers = Executors.newCachedThreadPool();
 
     //10Mb
     private final Integer FILE_MAX_SIZE = 10_048_576;
@@ -54,9 +53,14 @@ public class ParsePhoto extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        ITesseract tesseract = new Tesseract();
-        tesseract.setDatapath(TESSERACT_LIB_PATH);
-        tesseract.setLanguage("rus");
+        //recognizing Russian text
+        ITesseract tesseractRUS = new Tesseract();
+        tesseractRUS.setDatapath(TESSERACT_LIB_PATH);
+        tesseractRUS.setLanguage("rus");
+        //recognizing English text
+        ITesseract tesseractENG = new Tesseract();
+        tesseractENG.setDatapath(TESSERACT_LIB_PATH);
+        tesseractENG.setLanguage("eng");
 
         String fileName = Paths.get(getSubmittedFileName(filePart)).getFileName().toString();
         File targetFile = new File(TESSERACT_LIB_PATH + "/tessdata/img/" + fileName);
@@ -77,28 +81,29 @@ public class ParsePhoto extends HttpServlet {
                     outMessage = new Gson().toJson("it's realy file without name?");
                 } else {
 
-                    String parseResult = "";
+                    byte[] buffer = new byte[fileSize];
+                    bufferedInputStream.read(buffer);
+                    bufferedOutputStream.write(buffer);
 
-                    try {
-                        byte[] buffer = new byte[fileSize];
-                        bufferedInputStream.read(buffer);
-                        bufferedOutputStream.write(buffer);
-                        parseResult = tesseract.doOCR(targetFile);
-                    } catch (TesseractException e) {
-                        logger.error("Tesseract library exception", e);
-                    } finally {
-                        targetFile.delete();
-                    }
+                    //save recognized text
+                    List<String> listRecognize = recognizeTest(targetFile, tesseractRUS, tesseractENG);
 
-                    logger.debug("Parse result " + parseResult);
+                    StringBuilder allLanguigeText = new StringBuilder();
 
-                    Set<Component> contain = findInBase(parseResult);
+                    listRecognize.stream().forEach(allLanguigeText::append);
+
+                    Set<Component> contain = findInBase(allLanguigeText.toString());
+
+
                     outMessage = new Gson().toJson(contain);
                 }
                 resp.getWriter().write(outMessage);
             } catch (IOException e) {
                 logger.error("Exception while file reading", e);
+            } finally {
+                targetFile.delete();
             }
+
         } else {
             System.out.println("file is exist");
         }
@@ -115,31 +120,87 @@ public class ParsePhoto extends HttpServlet {
     }
 
     /**
-     * Find from text all components from base and put it in list
+     * Find from text all components from base and put it in set
      */
     private Set<Component> findInBase(String parseText) {
         HashSet<Component> result = new HashSet<>();
         List<Component> all = hibernateComponentDaoImpl.getAll();
 
-        String name;
-        parseText = parseText.toUpperCase();
+        for (Component component : all) {
+            if(result.contains(component))
+                continue;
 
-        for (int textPosition = 0; textPosition < parseText.length(); textPosition++) {
-
-            for (Component component : all) {
-                name = component.getName();
-                name = name.toUpperCase();
-
-                if (name.length() <= parseText.length() - textPosition
-                        && name.charAt(0) == parseText.charAt(textPosition)             //now find begin
-                        & name.equals(parseText.substring(textPosition, textPosition + name.length()))) {
-
-                    result.add(component);
-                    textPosition += name.length();
-                }
+            if (wordsIsExist(parseText, component.getName(), 5)
+                    || wordsIsExist(parseText, component.getNameENG(), 5)) {
+                result.add(component);
             }
         }
-
         return result;
+    }
+
+
+    private List<String> recognizeTest(File targetFile, ITesseract... languages) {
+        //save recornized text
+        List<String> listRecognize = new ArrayList<>();
+
+        try {
+            Collection<Callable<String>> tasks = new ArrayList<>();
+
+            for (ITesseract t : languages) {
+                tasks.add(() -> t.doOCR(targetFile));
+            }
+
+            List<Future<String>> results = workers.invokeAll(tasks);
+
+            for (Future<String> f : results) {
+                listRecognize.add(f.get());
+            }
+        //} catch (TesseractException e) {
+          //  logger.error("Tesseract library exception", e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            logger.error("Execution Exception");
+        }
+        return listRecognize;
+    }
+
+    /**
+     *
+     * @param text
+     * @param mismatch - symbols with 1 error (normal 5 for tesseract =)
+     * @return
+     */
+    private boolean wordsIsExist(String text, String word, int mismatch) {
+        if (word == null)
+            return false;
+        text = text.toUpperCase();
+        word = word.toUpperCase();
+        boolean finded = false;
+
+        int position;
+
+        for (int i = 0; i < text.length() - word.length(); i++) {
+            if (finded) {
+                break;
+            }
+            int different = word.length() / mismatch + 1;
+            position = i;
+            for (int j = 0; j < text.length(); j++) {
+
+                if (word.charAt(j) != text.charAt(position)) {
+                    different--;
+                }
+
+                if (different < 0)
+                    break;
+
+                if (j == text.length() - 1) {
+                    finded = true;
+                }
+                position++;
+            }
+        }
+        return finded;
     }
 }
