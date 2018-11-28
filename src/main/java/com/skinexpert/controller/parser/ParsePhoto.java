@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -84,14 +85,14 @@ public class ParsePhoto extends HttpServlet {
                     bufferedInputStream.read(buffer);
                     bufferedOutputStream.write(buffer);
 
-                    Set<Component> contain = new HashSet<>();
                     //save recognized text
                     List<String> listRecognize = recognizeTest(targetFile, tesseractRUS, tesseractENG);
 
-                    listRecognize.stream().parallel().forEach(string -> {
-                        contain.addAll(findInBase(string));
-                    });
-                    //logger.debug("Parse result " + parseResultRUS);
+                    StringBuilder allLanguigeText = new StringBuilder();
+
+                    listRecognize.stream().forEach(allLanguigeText::append);
+
+                    Set<Component> contain = findInBase(allLanguigeText.toString());
 
 
                     outMessage = new Gson().toJson(contain);
@@ -99,7 +100,10 @@ public class ParsePhoto extends HttpServlet {
                 resp.getWriter().write(outMessage);
             } catch (IOException e) {
                 logger.error("Exception while file reading", e);
+            } finally {
+                targetFile.delete();
             }
+
         } else {
             System.out.println("file is exist");
         }
@@ -116,48 +120,21 @@ public class ParsePhoto extends HttpServlet {
     }
 
     /**
-     * Find from text all components from base and put it in list
+     * Find from text all components from base and put it in set
      */
     private Set<Component> findInBase(String parseText) {
         HashSet<Component> result = new HashSet<>();
         List<Component> all = hibernateComponentDaoImpl.getAll();
 
-        String name;
-        String nameENG;
-        parseText = parseText.toUpperCase();
+        for (Component component : all) {
+            if(result.contains(component))
+                continue;
 
-        for (int textPosition = 0; textPosition < parseText.length(); textPosition++) {
-
-            for (Component component : all) {
-                name = component.getName().toUpperCase();
-                nameENG = component.getNameENG();
-
-                if (nameENG == null) {
-                    nameENG = "";
-                } else {
-                    nameENG = nameENG.toUpperCase();
-                }
-
-
-                if (name.length() <= parseText.length() - textPosition
-                        && name.charAt(0) == parseText.charAt(textPosition)             //now find begin
-                        & name.equals(parseText.substring(textPosition, textPosition + name.length()))) {
-
-                    result.add(component);
-                    textPosition += name.length();
-                }
-
-                if (nameENG.length() <= parseText.length() - textPosition
-                        && nameENG.length() > 0
-                        && nameENG.charAt(0) == parseText.charAt(textPosition)             //now find begin
-                        & nameENG.equals(parseText.substring(textPosition, textPosition + nameENG.length()))) {
-
-                    result.add(component);
-                    textPosition += nameENG.length();
-                }
+            if (wordsIsExist(parseText, component.getName(), 5)
+                    || wordsIsExist(parseText, component.getNameENG(), 5)) {
+                result.add(component);
             }
         }
-
         return result;
     }
 
@@ -170,11 +147,7 @@ public class ParsePhoto extends HttpServlet {
             Collection<Callable<String>> tasks = new ArrayList<>();
 
             for (ITesseract t : languages) {
-                tasks.add(new Callable<String>() {
-                    public String call() throws TesseractException {
-                        return t.doOCR(targetFile);
-                    }
-                });
+                tasks.add(() -> t.doOCR(targetFile));
             }
 
             List<Future<String>> results = workers.invokeAll(tasks);
@@ -187,10 +160,47 @@ public class ParsePhoto extends HttpServlet {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
-            e.printStackTrace();
-        } finally {
-            targetFile.delete();
+            logger.error("Execution Exception");
         }
         return listRecognize;
+    }
+
+    /**
+     *
+     * @param text
+     * @param mismatch - symbols with 1 error (normal 5 for tesseract =)
+     * @return
+     */
+    private boolean wordsIsExist(String text, String word, int mismatch) {
+        if (word == null)
+            return false;
+        text = text.toUpperCase();
+        word = word.toUpperCase();
+        boolean finded = false;
+
+        int position;
+
+        for (int i = 0; i < text.length() - word.length(); i++) {
+            if (finded) {
+                break;
+            }
+            int different = word.length() / mismatch + 1;
+            position = i;
+            for (int j = 0; j < text.length(); j++) {
+
+                if (word.charAt(j) != text.charAt(position)) {
+                    different--;
+                }
+
+                if (different < 0)
+                    break;
+
+                if (j == text.length() - 1) {
+                    finded = true;
+                }
+                position++;
+            }
+        }
+        return finded;
     }
 }

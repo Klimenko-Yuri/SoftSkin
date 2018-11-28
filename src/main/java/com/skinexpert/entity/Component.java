@@ -16,7 +16,7 @@ public class Component {
     @Column
     private String name;
 
-    @Column(nullable = false, columnDefinition = "")
+    @Column
     private String nameENG;
 
     @Column
@@ -26,6 +26,7 @@ public class Component {
     private TypeComponent type;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idComponent")
     private List<Product> productList;
 
 
