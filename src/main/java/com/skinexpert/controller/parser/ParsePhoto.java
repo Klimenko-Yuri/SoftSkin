@@ -18,14 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.*;
 
 @WebServlet(urlPatterns = "/parse")
 @MultipartConfig
 public class ParsePhoto extends HttpServlet {
-    public static final String TESSERACT_LIB_PATH = "/home/mihail";
+    public static final String TESSERACT_LIB_PATH = "/home/kosmetika";
     private static ComponentService hibernateComponentDaoImpl = ComponentService.getInstance();
     private Logger logger;
 
@@ -146,9 +145,7 @@ public class ParsePhoto extends HttpServlet {
         try {
             Collection<Callable<String>> tasks = new ArrayList<>();
 
-            for (ITesseract t : languages) {
-                tasks.add(() -> t.doOCR(targetFile));
-            }
+            for (ITesseract t : languages) tasks.add(() -> t.doOCR(targetFile));
 
             List<Future<String>> results = workers.invokeAll(tasks);
 
@@ -172,21 +169,22 @@ public class ParsePhoto extends HttpServlet {
      * @return
      */
     private boolean wordsIsExist(String text, String word, int mismatch) {
-        if (word == null)
+        if (word == null || word.length() == 0)
             return false;
         text = text.toUpperCase();
         word = word.toUpperCase();
         boolean finded = false;
 
         int position;
+        int different;
 
         for (int i = 0; i < text.length() - word.length(); i++) {
             if (finded) {
                 break;
             }
-            int different = word.length() / mismatch + 1;
+            different = word.length() / mismatch + 1;
             position = i;
-            for (int j = 0; j < text.length(); j++) {
+            for (int j = 0; j < word.length(); j++) {
 
                 if (word.charAt(j) != text.charAt(position)) {
                     different--;
@@ -195,7 +193,7 @@ public class ParsePhoto extends HttpServlet {
                 if (different < 0)
                     break;
 
-                if (j == text.length() - 1) {
+                if (j == word.length() - 1) {
                     finded = true;
                 }
                 position++;
