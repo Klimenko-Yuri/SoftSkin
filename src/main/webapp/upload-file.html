@@ -63,13 +63,6 @@
 
                         <!-- This is result of handle search-->
                   <div ng-repeat="component in handleComponents">
-                    <!-- TODO - Delete this code after check.start-->
-                        {{component.name}} - {{component.type}}.
-                        <br> {{component.description}}
-                        <hr>
-                    <!-- Delete this code after check.end -->
-
-
                     <!-- ngIf: component.type == 'DANGER' -->
                     <div ng-if="component.type == 'DANGER'">
                         <div class="alert alert-danger" role="alert">
@@ -98,12 +91,6 @@
 
                         <!-- This div contain parse result -->
                   <div ng-repeat="component in components">
-                       <!-- TODO - Delete this code after check.start-->
-                            {{component.name}} - {{component.type}}.
-                            <br> {{component.description}}
-                            <hr>
-                        <!-- Delete this code after check.end -->
-
                         <!-- ngIf: component.type == 'DANGER' -->
                         <div ng-if="component.type == 'DANGER'">
                             <div class="alert alert-danger" role="alert">
