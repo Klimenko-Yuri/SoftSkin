@@ -44,7 +44,7 @@
                 <div class="form-group">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="photo" required>
-                    <label class="custom-file-label">Выберите файл...</label>
+                    <label class="custom-file-label"  for="photo"></label>
                     <div class="invalid-feedback">Example invalid custom file feedback</div>
                   </div>
                 </div>
@@ -52,10 +52,18 @@
                   <button ng-click="getParseResult()" class="btn btn-success">Сканировать</button>
                 </div>
 
+                <p></p>
+
                 <!-- This is handle multi find  -->
                 <div ng-show = "showFind">
-                  Введите еще: <input ng-model="comstr" type="text" placeholder=" что найти ... (X;Y;R)">
-                  <button ng-click="find()" class="btn primary">Найти</button>
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder=" Что найти ... (X;Y;R)" ng-model="comstr" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" ng-click="find()" type="button" id="button-addon2">Найти</button>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!--This div contain element by wait of parse photo -->
@@ -66,7 +74,9 @@
                     <!-- ngIf: component.type == 'DANGER' -->
                     <div ng-if="component.type == 'DANGER'">
                         <div class="alert alert-danger" role="alert">
-                            <strong>{{component.name}}</strong><span class="badge badge-light float-right">{{component.type}}</span><br>
+                            <span class="badge badge-light float-right">{{component.type}}</span><br>
+                            <strong>{{component.name}}</strong>
+                            <strong>{{component.nameENG}}</strong>
                             <small class="ng-binding text-monospace">Описание: {{component.description}}</small>
                         </div>
                     </div>
@@ -74,7 +84,9 @@
                     <!-- ngIf: component.type == 'MIDDLE' -->
                     <div ng-if="component.type == 'MIDDLE'">
                         <div class="alert alert-warning" role="alert">
-                            <strong>{{component.name}}</strong><span class="badge badge-light float-right">{{component.type}}</span><br>
+                            <span class="badge badge-light float-right">{{component.type}}</span><br>
+                            <strong>{{component.name}}</strong>
+                            <strong>{{component.nameENG}}</strong>
                             <small class="ng-binding text-monospace">Описание: {{component.description}}</small>
                         </div>
                     </div>
@@ -82,7 +94,9 @@
                     <!-- ngIf: component.type == 'GOOD' -->
                     <div ng-if="component.type == 'GOOD'">
                         <div class="alert alert-success" role="alert">
-                            <strong>{{component.name}}</strong><span class="badge badge-light float-right">{{component.type}}</span><br>
+                            <span class="badge badge-light float-right">{{component.type}}</span><br>
+                            <strong>{{component.name}}</strong>
+                            <strong>{{component.nameENG}}</strong>
                             <small class="ng-binding text-monospace">Описание: {{component.description}}</small>
                         </div>
                     </div>
@@ -94,7 +108,9 @@
                         <!-- ngIf: component.type == 'DANGER' -->
                         <div ng-if="component.type == 'DANGER'">
                             <div class="alert alert-danger" role="alert">
-                                <strong>{{component.name}}</strong><span class="badge badge-light float-right">{{component.type}}</span><br>
+                                <span class="badge badge-light float-right">{{component.type}}</span><br>
+                                <strong>{{component.name}}</strong>
+                                <strong>{{component.nameENG}}</strong>
                                 <small class="ng-binding text-monospace">Описание: {{component.description}}</small>
                             </div>
                         </div>
@@ -102,7 +118,9 @@
                         <!-- ngIf: component.type == 'MIDDLE' -->
                         <div ng-if="component.type == 'MIDDLE'">
                             <div class="alert alert-warning" role="alert">
-                                <strong>{{component.name}}</strong><span class="badge badge-light float-right">{{component.type}}</span><br>
+                                <span class="badge badge-light float-right">{{component.type}}</span><br>
+                                <strong>{{component.name}}</strong>
+                                <strong>{{component.nameENG}}</strong>
                                 <small class="ng-binding text-monospace">Описание: {{component.description}}</small>
                             </div>
                         </div>
@@ -110,7 +128,9 @@
                         <!-- ngIf: component.type == 'GOOD' -->
                         <div ng-if="component.type == 'GOOD'">
                             <div class="alert alert-success" role="alert">
-                                <strong>{{component.name}}</strong><span class="badge badge-light float-right">{{component.type}}</span><br>
+                                <span class="badge badge-light float-right">{{component.type}}</span><br>
+                                <strong>{{component.name}}</strong>
+                                <strong>{{component.nameENG}}</strong>
                                 <small class="ng-binding text-monospace">Описание: {{component.description}}</small>
                             </div>
                         </div>
@@ -139,9 +159,24 @@
     </div>
   </footer>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="js/bundle.js" defer></script>
-<script src="js/photo-parser.js"></script>
+
 </body>
 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="js/bundle.js" defer></script>
+<script src="js/photo-parser.js"></script>
+
+<script type="application/javascript">
+
+    $('#photo').change(function(event){
+        var fileName = event.target.files[0].name;
+        if (event.target.nextElementSibling!=null){
+            event.target.nextElementSibling.innerText=fileName;
+            alert(fileName);
+        }
+    });
+
+</script>
 </html>

@@ -56,7 +56,9 @@
             <!-- ngIf: c.type == 'DANGER' -->
             <div ng-if="c.type == 'DANGER'">
               <div class="alert alert-danger" role="alert">
-                <strong>{{c.name}}</strong><span class="badge badge-light float-right">{{c.type}}</span><br>
+                <span class="badge badge-light float-right">{{c.type}}</span><br>
+                <strong>{{c.name}}</strong>
+                <strong>{{c.nameENG}}</strong>
                 <small class="ng-binding text-monospace">Описание: {{c.description}}</small>
               </div>
             </div>
@@ -64,7 +66,9 @@
             <!-- ngIf: c.type == 'MIDDLE' -->
             <div ng-if="c.type == 'MIDDLE'">
               <div class="alert alert-warning" role="alert">
-                <strong>{{c.name}}</strong><span class="badge badge-light float-right">{{c.type}}</span><br>
+                <span class="badge badge-light float-right">{{c.type}}</span><br>
+                <strong>{{c.name}}</strong>
+                <strong>{{c.nameENG}}</strong>
                 <small class="ng-binding text-monospace">Описание: {{c.description}}</small>
               </div>
             </div>
@@ -72,7 +76,9 @@
             <!-- ngIf: c.type == 'GOOD' -->
             <div ng-if="c.type == 'GOOD'">
               <div class="alert alert-success" role="alert">
-                <strong>{{c.name}}</strong><span class="badge badge-light float-right">{{c.type}}</span><br>
+                <span class="badge badge-light float-right">{{c.type}}</span><br>
+                <strong>{{c.name}}</strong>
+                <strong>{{c.nameENG}}</strong>
                 <small class="ng-binding text-monospace">Описание: {{c.description}}</small>
               </div>
             </div>
