@@ -71,7 +71,7 @@ public class HibernateComponentDaoImpl implements ComponentDao {
             criteria.add(Restrictions.eq("name", name));
 
             //Add new restriction for finding by name in English
-            criteria.add(Restrictions.or(Restrictions.eq("nameENG", name)));
+            criteria.add(Restrictions.eq("nameENG", name));
 
             return (Component) criteria.uniqueResult();
         } catch (RuntimeException e) {
