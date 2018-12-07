@@ -5,7 +5,7 @@
 
     <groupId>com.skinexpert</groupId>
     <artifactId>skin-expert</artifactId>
-    <version>3.2.1</version>
+    <version>3.2.2</version>
     <packaging>war</packaging>
 
     <build>
@@ -53,12 +53,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.6.Final</version>
+            <version>8.0.13</version>
         </dependency>
 
         <dependency>
@@ -100,7 +95,11 @@
             <version>1.4.195</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.3.7.Final</version>
+        </dependency>
 
     </dependencies>
 

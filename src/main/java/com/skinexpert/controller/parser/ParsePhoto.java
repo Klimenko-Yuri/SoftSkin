@@ -5,9 +5,8 @@ import com.skinexpert.entity.Component;
 import com.skinexpert.service.ComponentService;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -157,7 +156,7 @@ public class ParsePhoto extends HttpServlet {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
-            logger.error("Execution Exception");
+            logger.error("Execution Exception", e);
         }
         return listRecognize;
     }
